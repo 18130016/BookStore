@@ -2,7 +2,7 @@ use bookapp;
 create table book (
 id int primary key not null auto_increment,
 name nvarchar(100),
-image nvarchar(255),
+image MEDIUMTEXT,
 author nvarchar(100),
 description nvarchar(255),
 price double 
@@ -10,7 +10,8 @@ price double
 create table user(
 id int primary key not null auto_increment,
 full_name nvarchar(100),
-password nvarchar(100),
+userName nvarchar(100),
+passWord nvarchar(100),
 birthday nvarchar(100)
 );
 create table address(
@@ -63,4 +64,14 @@ foreign key(book_id) references book(id)
 	foreign key(user_id) references user(id),
 	foreign key(book_id) references book(id)
  );
+ 
+ create table selling_book(
+	id int primary key not null auto_increment,
+	book_id int not null,
+    foreign key(book_id) references book(id)
+ )
+ 
+
+ 
+ 
  
