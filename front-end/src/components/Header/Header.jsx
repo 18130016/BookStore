@@ -1,6 +1,6 @@
 import React from "react";
 import images from "../../utils/image";
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { IconCart } from "../../assets/svg";
@@ -60,8 +60,12 @@ const Header = () => {
       </div>
 
       <div className="flex flex-row items-center absolute right-10">
-        <span className="pr-20 font-serif hover:text-red-700 cursor-pointer">FAB</span>
-        <span className="pr-20 font-serif hover:text-red-700 cursor-pointer">Track Order</span>
+        <span className="pr-20 font-serif hover:text-red-700 cursor-pointer">
+          FAB
+        </span>
+        <span className="pr-20 font-serif hover:text-red-700 cursor-pointer">
+          Track Order
+        </span>
         <span className="hover:cursor-pointer pr-20">
           <IconCart />
         </span>

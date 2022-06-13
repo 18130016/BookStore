@@ -1,4 +1,5 @@
 import React from "react";
+import Carousel from "../../components/Carousel/Carousel";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
 
@@ -14,6 +15,7 @@ const Home = () => {
         className="w-full h-full"
       >
           <Menu />
+          <Carousel />
         
       </div>
     </div>

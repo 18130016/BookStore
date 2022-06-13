@@ -1,16 +1,17 @@
 import React from "react";
+import styles from "./Menu.module.scss";
 
 const Menu = () => {
   return (
     <div className="w-10/12 m-auto">
-        <ul className="flex p-2 justify-center">
-            <li className="pl-7 font-semibold hover:cursor-pointer">Home</li>
-            <li className="pl-7 font-semibold hover:cursor-pointer">Category</li>
-            <li className="pl-7 font-semibold hover:cursor-pointer">About</li>
-            <li className="pl-7 font-semibold hover:cursor-pointer">Pages</li>
-            <li className="pl-7 font-semibold hover:cursor-pointer">Blog</li>
-            <li className="pl-7 font-semibold hover:cursor-pointer">Connect</li>
-        </ul>
+      <ul className={styles.menu}>
+        <li>Home</li>
+        <li>Category</li>
+        <li>About</li>
+        <li>Pages</li>
+        <li>Blog</li>
+        <li>Connect</li>
+      </ul>
     </div>
   );
 };
