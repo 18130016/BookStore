@@ -45,7 +45,7 @@ const Header = () => {
 
   return (
     <div className="w-10/12 h-20 bg-white m-auto flex flex-row items-center relative">
-      <img src={images.logo} alt="logo" />
+      <img src={images.logo} alt="logo" className="hover:cursor-pointer" />
       <div className="w-2/6">
         <Search>
           <SearchIconWrapper>
