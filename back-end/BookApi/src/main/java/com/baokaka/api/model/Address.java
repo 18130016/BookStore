@@ -19,6 +19,8 @@ public class Address implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private int user_id;
+	private String name;
+	private String phoneNumber;
 	private String province;
 	private String district;
 	private String wards;
@@ -31,103 +33,88 @@ public class Address implements Serializable{
 	 * @param wards
 	 * @param detail
 	 */
-	public Address(int id, int user_id, String province, String district, String wards, String detail) {
-		this.id = id;
-		this.user_id = user_id;
-		this.province = province;
-		this.district = district;
-		this.wards = wards;
-		this.detail = detail;
-	}
+	
 	
 	public Address() {
 		
 	}
 
-	/**
-	 * @return the id
-	 */
+	public Address(int id, int user_id, String name, String phoneNumber, String province, String district, String wards,
+			String detail) {
+		this.id = id;
+		this.user_id = user_id;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.province = province;
+		this.district = district;
+		this.wards = wards;
+		this.detail = detail;
+	}
+
 	public int getId() {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	/**
-	 * @return the user_id
-	 */
 	public int getUser_id() {
 		return user_id;
 	}
 
-	/**
-	 * @param user_id the user_id to set
-	 */
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
 
-	/**
-	 * @return the province
-	 */
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public String getProvince() {
 		return province;
 	}
 
-	/**
-	 * @param province the province to set
-	 */
 	public void setProvince(String province) {
 		this.province = province;
 	}
 
-	/**
-	 * @return the district
-	 */
 	public String getDistrict() {
 		return district;
 	}
 
-	/**
-	 * @param district the district to set
-	 */
 	public void setDistrict(String district) {
 		this.district = district;
 	}
 
-	/**
-	 * @return the wards
-	 */
 	public String getWards() {
 		return wards;
 	}
 
-	/**
-	 * @param wards the wards to set
-	 */
 	public void setWards(String wards) {
 		this.wards = wards;
 	}
 
-	/**
-	 * @return the detail
-	 */
 	public String getDetail() {
 		return detail;
 	}
 
-	/**
-	 * @param detail the detail to set
-	 */
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
-	
+
 	
 	
 	

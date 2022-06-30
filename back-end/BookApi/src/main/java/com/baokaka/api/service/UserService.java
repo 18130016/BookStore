@@ -42,25 +42,25 @@ public class UserService {
     public AuthResponse login(AuthRequest request) {
         User user = this.getUserByUserName(request.getUserName());
         if (user == null || !passwordEncoder.matches(request.getPassWord(), user.getPassWord())) {
-            throw new IllegalArgumentException("The Username or Password is Incorrect");
+            return new AuthResponse(false,"Sai tên đăng nhập hoặc mật khẩu");
         }
-        return new AuthResponse(jwtService.generateToken(user));
+        return new AuthResponse(true,jwtService.generateToken(user));
     }
     
     public AuthResponse register(User request) {
         if (this.getUserByUserName(request.getUserName()) != null) {
-            return new AuthResponse("UserName arealy exist!");
+            return new AuthResponse(false,"Đăng ký tài khoản thất bại");
         }else {
         	User user = new User();
         	user.setUserName(request.getUserName());
         	user.setPassWord(passwordEncoder.encode(request.getPassWord()));
         	user.setFull_name(request.getFull_name());
         	user.setBirthday(request.getBirthday());
+        	user.setAdmin(request.isAdmin());   
         	userRepository.save(user);
         	}
       
-
-        return new AuthResponse("Account created success!");
+        return new AuthResponse(true,"Đăng ký tài khoản thành công");
         		
     }
 }

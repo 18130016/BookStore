@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        source.registerCorsConfiguration("/**", configuration);
 	        return source;
 	    }
+	    
 
 	    @Override
 	    protected void configure(HttpSecurity http) throws Exception {
@@ -52,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	                .and()
 	                .authorizeRequests()
-	                .antMatchers("/api/login/**", "/api/register/**","/api/book/**","/api/selling").permitAll()
+	                .antMatchers("/api/login/**", "/api/register/**","/api/book/**","/api/selling","/api/cmt/**").permitAll()
 	                .anyRequest().authenticated()
 	                .and()
 	                .addFilterBefore(getCustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

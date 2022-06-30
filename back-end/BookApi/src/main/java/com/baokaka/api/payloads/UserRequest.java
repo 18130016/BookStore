@@ -1,4 +1,4 @@
-package com.baokaka.api.request;
+package com.baokaka.api.payloads;
 
 import java.io.Serializable;
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,10 +50,24 @@ public class UserController {
 		}
 	 }
 	 
-	 @GetMapping()
+	 @GetMapping("/user")
 	 public List<User> getAll(){ 
 		 return repository.findAll();
 	 }
+	 
+	 @GetMapping("/register/check/{username}")
+	 public boolean checkUser(@PathVariable("username") String user) {
+		 if(userService.getUserByUserName(user)!=null) {
+			 return false;
+		 }
+		 return true;
+	 }
+	 
+	 @GetMapping("/user/{username}")
+	 public User getUserByUserName(@PathVariable("username") String user) {
+		 return userService.getUserByUserName(user);
+	 }
+	 
 	 
 	 
 	

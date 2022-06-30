@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baokaka.api.model.Address;
+import com.baokaka.api.payloads.AuthResponse;
 import com.baokaka.api.repository.AddressRepository;
 
 @CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
@@ -38,23 +39,35 @@ public class AddressController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable("id") int id) {
-		addressRepository.deleteById(id);
+	public AuthResponse delete(@PathVariable("id") int id) {
+		try {
+			addressRepository.deleteById(id);
+			return new AuthResponse(true, "Đã xóa địa chỉ");
+		} catch (Exception e) {
+			return new AuthResponse(false, "Xóa địa chỉ thất bại");
+		}
 	}
 	
 	@PostMapping("")
-	public Address addAddress(@RequestBody Address ad) {
-		return addressRepository.save(ad);
+	public AuthResponse addAddress(@RequestBody Address ad) {
+		try {
+			addressRepository.save(ad);
+			return new AuthResponse(true, "Thêm địa chỉ thành công");
+		} catch (Exception e) {
+			return new AuthResponse(false, "Thêm địa chỉ thất bại");
+					
+		}
+		
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id ,@RequestBody Address addr){
+	public AuthResponse update(@PathVariable("id") int id ,@RequestBody Address addr){
 		try {
 			addr.setId(id);
 			addressRepository.save(addr);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new AuthResponse(true, "Cập nhật địa chỉ thành công");
 		}catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new AuthResponse(false, "Cập nhật địa chỉ thất bại");
 		}
 	}
 
