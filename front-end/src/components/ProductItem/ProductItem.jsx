@@ -3,7 +3,7 @@ import { RatingStars } from "../RatingStars/RatingStars";
 
 const ProductItem = (props) => {
   return (
-    <div className="w-full h-[450px] bg-white mt-10 ml-10 mb-10">
+    <div className="w-full h-[450px] bg-white mt-10 ml-10 mb-10 hover:cursor-pointer hover:drop-shadow-2xl">
       <div className="h-[65%] w-full">
         <img
         className="w-full h-full object-cover"

@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { IconCart } from "../../assets/svg";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const Search = styled("div")(({ theme }) => ({
@@ -69,7 +70,9 @@ const Header = () => {
         <span className="hover:cursor-pointer pr-20">
           <IconCart />
         </span>
-        <button className="btn-login font-serif">Sign in</button>
+        <button className="btn-login font-serif">
+          <Link to="/login">Sign In</Link>
+        </button>
       </div>
     </div>
   );
