@@ -1,7 +1,7 @@
 import '../css/register.css';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Toast } from 'primereact/toast';
 
 import UserService from '../service/UserService'
@@ -13,11 +13,11 @@ export default function Register() {
 
     const userService = new UserService();
 
-    const style={
-        display:"none"
+    const style = {
+        display: "none"
     }
 
-    const[styles, setStyles]= useState(style);
+    const [styles, setStyles] = useState(style);
 
     const [styleError, setStyleError] = useState([])
 
@@ -26,8 +26,13 @@ export default function Register() {
         passWord: " ",
         full_name: " ",
         birthday: " ",
-        admin: false
+        admin: true
     }
+
+    const [fullName, setFullName] = useState("");
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
 
     const [registerForm, setRegisterForm] = useState(initForm)
@@ -42,38 +47,44 @@ export default function Register() {
 
     useEffect(() => {
         if (registerForm.userName !== "") {
-            userService.checkExistUser(registerForm.userName).then((data) =>{
-                if(data !== true){
-                    setStyles({...styles,display:"block"})
-                }else{
-                    setStyles({...styles,display:"none"})
+            userService.checkExistUser(registerForm.userName).then((data) => {
+                if (data !== true) {
+                    setStyles({ ...styles, display: "block" })
+                } else {
+                    setStyles({ ...styles, display: "none" })
                 }
             })
         }
-    }, [registerForm,styles]) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [registerForm, styles]) // eslint-disable-line react-hooks/exhaustive-deps
 
     function submit() {
-        userService.register(registerForm).then((data)=>{
-            if(data.check===true){
+        userService.register(registerForm).then((data) => {
+            if (data.check === true) {
                 navigate("/login", { replace: true });
-            }else{
-                toast.current.show({severity:'error', summary: 'Thất bại', detail:data.acessToken, life: 3000});
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Thất bại', detail: data.acessToken, life: 3000 });
             }
         })
-        
-    }
 
+    }
     function checkUSerExist(event) {
         setRegisterForm({ ...registerForm, userName: event.target.value })
     }
 
+    const handleOnChangeFullName = (e) => {
+        setFullName(e.target.value);
+        setRegisterForm({ ...registerForm, full_name: fullName })
+    }
 
+    const handleOnChangeUsername = (e) =>{
+        setUserName(e);
+        checkUSerExist(e);
+    }
 
-
-
+    
     return (
         <div>
-              <Toast ref={toast} />
+            <Toast ref={toast} />
             <div className="register-form-area">
                 <div className="register-form text-center">
                     <div className="register-heading">
@@ -84,17 +95,16 @@ export default function Register() {
                     <div className="input-box">
                         <div className="single-input-fields">
                             <label>Họ và tên</label>
-                            <input type="text" placeholder="Nhập họ và tên"
-                                onChange={(e) => setRegisterForm({ ...registerForm, full_name: e.target.value })} />
+                            <input style={!fullName.length ? {border: `1px red solid`} : null} type="text" value={fullName} placeholder="Nhập họ và tên"
+                                onChange={handleOnChangeFullName} />
                         </div>
                         <div className="single-input-fields">
                             <label>Tên đăng nhập <span style={styles} className='error-username'>Tên đăng nhập đã được sử dụng</span></label>
                             <input type="text" placeholder="Tên đăng nhập"
-                                onChange={(e) => checkUSerExist(e)}
-                                />
+                                onChange={handleOnChangeUsername}
+                            />
 
                         </div>
-
 
                         <div className="single-input-fields">
                             <label>Ngày sinh</label>
@@ -116,7 +126,7 @@ export default function Register() {
 
                     <div className="register-footer">
                         <p> Bạn đã có tài khoản? <Link to="/login"> Đăng nhập</Link> </p>
-                        <button className="submit-btn3" onClick={()=>submit()} >Đăng ký</button>
+                        <button className="submit-btn3" onClick={() => submit()} >Đăng ký</button>
                     </div>
                 </div>
             </div>

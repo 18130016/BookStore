@@ -13,13 +13,6 @@ import BookService from '../service/BookService';
 import dataproducts from '../asset/listbook'
 
 
-
-
-
-
-
-
-
 export default function AdminPage() {
 
     const [usershow, setNewUserShow] = useState(false);
@@ -83,7 +76,7 @@ export default function AdminPage() {
             <td>{item.author.join(" | ")}</td>
             <td>{item.typeOfBook.join(" | ")}</td>
             <td>{item.price}</td>
-            <td><i className="pi pi-info-circle" /> <i className='pi pi-trash' onClick={function(){deleteProduct(item.id)}} />
+            <td><i className="pi pi-info-circle" /> <i className='pi pi-trash' onClick={function () { deleteProduct(item.id) }} />
             </td>
         </tr>
     )

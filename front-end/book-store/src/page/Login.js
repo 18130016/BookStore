@@ -37,9 +37,9 @@ export default function Login() {
         })
     }
 
-    function checkUserAdmin(){
-        userService.getUserByUserName(loginForm.userName).then((dt)=>{
-            if(dt.admin===true){
+    function checkUserAdmin() {
+        userService.getUserByUserName(loginForm.userName).then((dt) => {
+            if (dt.admin === true) {
                 dispatch(isAdmin())
             }
         })
