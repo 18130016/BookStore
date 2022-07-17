@@ -5,6 +5,7 @@ import Sliders from '../component/Slider';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SellingService from "../service/SellingService"
+import BookService from '../service/BookService';
 
 
 
@@ -26,17 +27,18 @@ export default function Home() {
 
     const sellingService = new SellingService();
 
-    function getApi(){
+    function getApi() {
         return sellingService.getAll();
     }
 
-    useEffect(()=>{
-        getApi().then((data)=>setListSelling(data))
-    },[])
- 
+    useEffect(() => {
+        getApi().then((data) => setListSelling(data))
+    }, [])
+
 
     return (
         <div className='home-area'>
+
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-12'>
@@ -99,7 +101,7 @@ export default function Home() {
                     </div>
                     <div className='row'>
                         <div className='col-xl-12'>
-                                <Sliders data={listSelling}></Sliders>
+                            <Sliders data={listSelling}></Sliders>
                         </div>
                     </div>
                 </div>

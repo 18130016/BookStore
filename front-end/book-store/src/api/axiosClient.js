@@ -2,9 +2,6 @@ import axios from "axios";
 import queryString, { stringify } from 'query-string';
 import UserService from "../service/UserService";
 
-
-
-
 const axiosClient = axios.create({
     baseURL: "",
     headers: {

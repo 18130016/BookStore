@@ -6,9 +6,6 @@ import Form from 'react-bootstrap/Form';
 import BookService from '../../service/BookService';
 
 
-
-
-
 export default function NewProductForm() {
 
     const initialValues = {

@@ -8,11 +8,7 @@ import CheckBox from "../component/CheckBox";
 import BookService from "../service/BookService";
 
 export default function Products() {
-
-
-
-
-    const [first,setFirst] = useState(0);
+    const [first, setFirst] = useState(0);
     const onBasicPageChange = (event) => {
         setFilter({ ...filter, page: event.page + 1 })
         setFirst(event.first);
@@ -110,9 +106,8 @@ export default function Products() {
         })
     }, [filter])// eslint-disable-line react-hooks/exhaustive-deps
 
-
     const showProduct = products
-        .map((item,index) =>
+        .map((item, index) =>
             <div key={index} className="col-md-3">
                 <BookCard book={item}></BookCard>
             </div>
@@ -170,7 +165,7 @@ export default function Products() {
                             <div className="product-view-top">
                                 <div className="col-md-12">
                                     <div className="product-search">
-                                        <input type="text" placeholder="Search" onChange={(e)=>setFilter({...filter,name:e.target.value})} />
+                                        <input type="text" placeholder="Search" onChange={(e) => setFilter({ ...filter, name: e.target.value })} />
                                         <button><i className="pi pi-search" ></i></button>
                                     </div>
                                 </div>
