@@ -14,19 +14,19 @@ export default function NewProductForm() {
         author: "",
         typeOfBook: "",
         description: "",
-        price:""
+        price: ""
     }
-    
-    const [formValue,setFormValue] = useState(initialValues);
+
+    const [formValue, setFormValue] = useState(initialValues);
 
     const [image, setImage] = useState();
 
     const [result, setResult] = useState("");
 
 
-    const handelChange = (e)=>{
-        const {name,value} = e.target;
-        setFormValue({...formValue,[name]:value})
+    const handelChange = (e) => {
+        const { name, value } = e.target;
+        setFormValue({ ...formValue, [name]: value })
     }
 
     function uploader(e) {
@@ -39,7 +39,7 @@ export default function NewProductForm() {
         reader.readAsDataURL(imageFile);
     }
 
-    const getByteArray =(event)=>{
+    const getByteArray = (event) => {
         setImage(event.target.files[0])
     }
 
@@ -50,31 +50,29 @@ export default function NewProductForm() {
     const bookService = new BookService();
 
 
-    function postApi(book){
+    function postApi(book) {
         return bookService.newBook(book);
     }
 
-    const submitt = ()=>{
-        const book ={
-            name:formValue.name,
-            image:image,
-            author:formValue.author,
-            typeOfBook:formValue.typeOfBook,
-            price:formValue.price,
-            description:formValue.description
+    const submitt = () => {
+        const book = {
+            name: formValue.name,
+            image: image,
+            author: formValue.author,
+            typeOfBook: formValue.typeOfBook,
+            price: formValue.price,
+            description: formValue.description
         }
 
-        
-
         const formdata = new FormData();
-        formdata.append("name",book.name)
-        formdata.append("image",book.image)
-        formdata.append("author",book.author)
-        formdata.append("typeOfBook",book.typeOfBook)
-        formdata.append("price",book.price)
-        formdata.append("description",book.description)
+        formdata.append("name", book.name)
+        formdata.append("image", book.image)
+        formdata.append("author", book.author)
+        formdata.append("typeOfBook", book.typeOfBook)
+        formdata.append("price", book.price)
+        formdata.append("description", book.description)
 
-        postApi(formdata).then(()=>console.log(book));
+        postApi(formdata).then(() => console.log(book));
     }
 
     return (
@@ -122,7 +120,7 @@ export default function NewProductForm() {
                 <div >
                     <Form.Group controlId='description' className='mb-3'>
                         <Form.Label>Mô tả</Form.Label>
-                        <Form.Control type="text" as="textarea" size="sm" name="description" value={formValue.description} onChange={handelChange}  />
+                        <Form.Control type="text" as="textarea" size="sm" name="description" value={formValue.description} onChange={handelChange} />
                     </Form.Group>
                 </div>
 

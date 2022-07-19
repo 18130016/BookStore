@@ -5,11 +5,9 @@ import { Rating } from 'primereact/rating';
 export default function BookCard(prop) {
     let data = prop.book;
 
-
     const textAuthor = data.author.join(" | ") 
 
     const linktoDetail = "/product/"+ data.id;
-
     return (
         <div key={data.id}>
             <div className='properties pb-30'>

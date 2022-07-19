@@ -23,13 +23,6 @@ export default function Products() {
         name: ""
     }
 
-    // const initProduct={
-    //     numberOfSize:0,
-    //     list:[],
-    //     numberOfItems:8,
-    //     numberOfPages:0
-    // }
-
     const author = [
         {
             display: "Loại 1",
@@ -67,7 +60,6 @@ export default function Products() {
     const [products, setProduct] = useState([]);
     const [filter, setFilter] = useState(initFilter)
     const [totalProduct, setTotalProduct] = useState(0);
-
 
     const filterSelect = (type, checked, item) => {
         if (checked) {
@@ -107,11 +99,12 @@ export default function Products() {
     }, [filter])// eslint-disable-line react-hooks/exhaustive-deps
 
     const showProduct = products
-        .map((item, index) =>
-            <div key={index} className="col-md-3">
+        .map((item, index) => {
+        
+            return (<div key={index} className="col-md-3">
                 <BookCard book={item}></BookCard>
-            </div>
-        )
+            </div>)
+        })
 
     const clearFilter = () => setFilter(initFilter)
 

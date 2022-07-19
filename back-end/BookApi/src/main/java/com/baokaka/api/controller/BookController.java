@@ -43,7 +43,7 @@ public class BookController {
 			BookResponse b = new BookResponse();
 			b.setId(n.getId());
 			b.setName(n.getName());
-			b.setImage(n.getId());
+			b.setImage(n.getImage());
 			b.setAuthor(b.sliceAuthor(n.getAuthor()));
 			b.setTypeOfBook(b.sliceTypeOfBook(n.getTypeOfBook()));
 			b.setDescripton(n.getDescription());
@@ -55,14 +55,10 @@ public class BookController {
 	
 	@PostMapping("/pagination")
 	public BookPaginationAndFilter getBookAndPagination(@RequestBody BookFilter filter ) {
-		
 		return bookService.findAllBookWithPaginationAndFilter(filter);
 
 	}
-	
-	
-	
-	
+
 	@GetMapping(path = "/{id}")
 	public BookResponse getById(@PathVariable("id") Integer id) {
 		Book book = bookRepository.findById(id).get();
@@ -70,18 +66,16 @@ public class BookController {
 	}
 	
 	@PostMapping("")
-	public Book addBook(@RequestPart("name") String name,@RequestPart("image") MultipartFile image,
+	public Book addBook(@RequestPart("name") String name,@RequestPart("image") String image,
 			@RequestPart("author") String author, @RequestPart("typeOfBook") String typeOfBook,
 			@RequestPart("price") String price, @RequestPart("description") String description) throws IOException {
-		
-		byte[] arr = image.getBytes();
 		
 		Book newBook = new Book();
 		newBook.setName(name);
 		newBook.setDescription(description);
 		newBook.setTypeOfBook(typeOfBook);
 		newBook.setPrice(Double.parseDouble(price));
-		newBook.setImage(arr);
+		newBook.setImage(image);
 		newBook.setAuthor(author);
 		
 		return bookRepository.save(newBook);
@@ -104,14 +98,14 @@ public class BookController {
 		}
 	}
 	
-	@GetMapping("/image/{id}")
-	@ResponseBody
-	public void getImage(@PathVariable("id") int id, HttpServletResponse response) throws IOException {
-		Book book = bookRepository.findById(id).get();
-		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-        response.getOutputStream().write(book.getImage());
-        response.getOutputStream().close();
-	}
+//	@GetMapping("/image/{id}")
+//	@ResponseBody
+//	public void getImage(@PathVariable("id") int id, HttpServletResponse response) throws IOException {
+//		Book book = bookRepository.findById(id).get();
+//		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+//        response.getOutputStream().write(book.getImage());
+//        response.getOutputStream().close();
+//	}
 
 	
 }

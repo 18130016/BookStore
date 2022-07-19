@@ -25,8 +25,8 @@ public class Book implements Serializable{
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "image", length = Integer.MAX_VALUE)
-	private byte[] image;
+	@Column(name = "image")
+	private String image;
 	
 	@Column(name = "type_of_book")
 	private String typeOfBook;
@@ -47,7 +47,7 @@ public class Book implements Serializable{
 
 
 
-	public Book(int id, String name, byte[] image, String typeOfBook, String author, String description, double price) {
+	public Book(int id, String name, String image, String typeOfBook, String author, String description, double price) {
 		this.id = id;
 		this.name = name;
 		this.image = image;
@@ -83,13 +83,13 @@ public class Book implements Serializable{
 
 
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
 
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 

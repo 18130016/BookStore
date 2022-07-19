@@ -20,7 +20,7 @@ public class BookResponse {
 	public BookResponse(Book b) {
 		this.id = b.getId();
 		this.name = b.getName();
-		this.image = "http://localhost:8080/api/book/image/"+b.getId();
+		this.image = b.getImage();
 		this.author = sliceAuthor(b.getAuthor());
 		this.typeOfBook = sliceTypeOfBook(b.getTypeOfBook());
 		this.descripton = b.getDescription();
@@ -34,7 +34,7 @@ public class BookResponse {
 			String descripton, double price) {
 		this.id = id;
 		this.name = name;
-		this.image = "http://localhost:8080/api/book/image/"+ image;
+		this.image =  image;
 		this.author = sliceAuthor(author);
 		this.typeOfBook = sliceTypeOfBook(typeOfBook);
 		this.descripton = descripton;
@@ -55,8 +55,8 @@ public class BookResponse {
 	public String getImage() {
 		return image;
 	}
-	public void setImage(int image) {
-		this.image = "http://localhost:8080/api/book/image/"+ image;
+	public void setImage(String image) {
+		this.image = image;
 	}
 	public String[] getAuthor() {
 		return author;
