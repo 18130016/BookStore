@@ -1,16 +1,32 @@
 
 import '../css/home.css';
 import Slider from "react-slick";
-import Sliders from '../component/Slider';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import SellingService from "../service/SellingService"
 import BookService from '../service/BookService';
+import BookCard from '../component/BookCard';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+import { FreeMode, Pagination, Autoplay } from "swiper";
+import { Paginator } from 'primereact/paginator';
 
 
+const pagination = {
+    clickable: true,
+    renderBullet: function (index, className) {
+        return (
+            '<span style="color:#BD1874; font-weight: 600; font-size:18px; background-color: #fef4f4; padding-left: 35px" class="' +
+            className +
+            '">' +
+            (index + 1) +
+            "</span>"
+        );
+    },
+};
 
 export default function Home() {
-
 
     var settings = {
         dots: true,
@@ -22,17 +38,44 @@ export default function Home() {
         autoplaySpeed: 2000,
         cssEase: "linear"
     };
+    const initFilter = {
+        typeOfBook: [],
+        author: [],
+        page: 1,
+        size: 8,
+        name: ""
+    }
 
-    const [listSelling, setListSelling] = useState([]);
+    const [first, setFirst] = useState(0);
+    const onBasicPageChange = (event) => {
+        setFilter({ ...filter, page: event.page + 1 })
+        setFirst(event.first);
+    }
+    const [filter, setFilter] = useState(initFilter)
+    const [totalProduct, setTotalProduct] = useState(0);
 
-    const sellingService = new SellingService();
+    const [listBook, setListBook] = useState([]);
+    const [listBookSwiper, setListBookSwiper] = useState([]);
+
+    const bookService = new BookService();
 
     function getApi() {
-        return sellingService.getAll();
+        return bookService.getAll();
+    }
+
+    function Update() {
+        return filter;
     }
 
     useEffect(() => {
-        getApi().then((data) => setListSelling(data))
+        bookService.getByPagination(Update()).then((data) => {
+            setListBook(data.list)
+            setTotalProduct(data.numberOfItems)
+        })
+    }, [filter])
+
+    useEffect(() => {
+        getApi().then((data) => setListBookSwiper(data))
     }, [])
 
 
@@ -92,23 +135,60 @@ export default function Home() {
             </div>
             <div className='best-selling'>
                 <div className='container'>
-                    <div className="row justify-content-center">
-                        <div className="col-xl-7 col-lg-8">
-                            <div className="section-tittle text-center mb-55">
-                                <h2>Best Selling Books Ever</h2>
-                            </div>
-                        </div>
+                    <div className='w-full'>
+                    <h2 className='text-3xl pb-10 font-semibolds  text-center'>Best Selling Books Ever</h2>
+                        
+                        <Swiper
+                            slidesPerView={5}
+                            freeMode={true}
+                            autoplay = {{
+                                delay: 2000,
+                                disableOnInteraction: false,
+                            }}
+                            pagination={pagination}
+                            modules={[FreeMode, Pagination, Autoplay]}
+                            className="flex flex-row items-center mb-10"
+                        >
+                            {listBookSwiper.map((book) => {
+                                return (
+                                    <SwiperSlide className="mb-10">
+                                        <BookCard book={book} />
+                                    </SwiperSlide>
+                                )
+                            })}
+                        </Swiper>
                     </div>
-                    <div className='row'>
-                        <div className='col-xl-12'>
-                            <Sliders data={listSelling}></Sliders>
+                    <div className='w-full'>
+                        <h2 className='text-3xl pb-10 font-semibolds  text-center'>Best Selling BookEver</h2>
+                        <div className='w-full flex flex-row items-center flex-wrap h-full'>
+                            {listBook.map((book) => {
+                                return (
+                                    <div className='w-[20%]'>
+                                        <BookCard book={book} />
+                                    </div>
+                                )
+                            })}
+                            {listBook.map((book) => {
+                                return (
+                                    <div className='w-[20%]'>
+                                        <BookCard book={book} />
+                                    </div>
+                                )
+                            })}
+                            {listBook.map((book) => {
+                                return (
+                                    <div className='w-[20%]'>
+                                        <BookCard book={book} />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div>
+                            <Paginator first={first} rows={8} totalRecords={totalProduct} onPageChange={onBasicPageChange}></Paginator>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     )
 }

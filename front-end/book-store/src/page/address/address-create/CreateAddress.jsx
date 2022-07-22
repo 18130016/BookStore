@@ -7,14 +7,15 @@ import Select from "@mui/material/Select";
 import { FilledInput } from "@mui/material";
 import axios from "axios";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 800,
-  height: 900,
+  width: "40%",
+  height: "90%",
   bgcolor: "background.paper",
   border: "none",
   boxShadow: 24,
@@ -104,7 +105,12 @@ const CreateAddress = (props) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <h3 className="text-center">THÊM ĐỊA CHỈ</h3>
+        <div className="w-full relative flex items-center justify-center">
+          <h3 className="text-center font-semibold text-2xl">THÊM ĐỊA CHỈ</h3>
+          <span onClick={props.handleCloseCreateAddress} className="cursor-pointer absolute right-[-15px] top-[-15px]">
+            <HighlightOffIcon fontSize="large" />
+          </span>
+        </div>
         <div className="w-full flex flex-row items-center justify-center mt-5">
           <span className="w-[25%] font-semibold text-lg">Tên người nhận</span>
           <input
@@ -248,7 +254,7 @@ const CreateAddress = (props) => {
 
         <div
           onClick={handleCreateAddress}
-          className="cursor-pointer hover:bg-gray-700 m-auto w-[50%] h-14 mt-5 bg-gray-500 rounded-lg flex items-center justify-center"
+          className="cursor-pointer hover:opacity-50 m-auto w-[50%] h-14 mt-5 bg-[#ff1616] rounded-lg flex items-center justify-center"
         >
           <span className="font-semibold text-white">THÊM ĐỊA CHỈ</span>
         </div>

@@ -3,17 +3,17 @@ import "../css/cart.css"
 import CartService from "../service/CartService"
 import { Toast } from 'primereact/toast';
 
-import { useDispatch,useSelector } from "react-redux";
-import { addItem,removeItem,removeAll } from "../app/ListCartItem";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem, removeItem, removeAll } from "../app/ListCartItem";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Cart() {
     let uID = localStorage.getItem("userId")
     const toast = useRef(null);
     const cartService = new CartService()
     const dispath = useDispatch()
-    const navigate= useNavigate()
-    
+    const navigate = useNavigate()
+
     const data = useSelector(state => state.listCartItem.list)
 
 
@@ -24,7 +24,7 @@ export default function Cart() {
             setCartItem(data)
             dispath(removeAll())
         })
-    },[])
+    }, [])
 
     function removeItemOfCart(id) {
         cartService.removeItem(id).then((data) => {
@@ -37,9 +37,9 @@ export default function Cart() {
     }
 
     function minusValue(item) {
-        
-        if(item.qty===1){ 
-            return  toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: "Số lượng đã tối thiểu", life: 1000 });
+
+        if (item.qty === 1) {
+            return toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: "Số lượng đã tối thiểu", life: 1000 });
         }
 
         let cartItem = {
@@ -78,35 +78,35 @@ export default function Cart() {
     }
 
     //chọn thì thêm vào redux bỏ chọn thì xóa khỏi redux
-    const cartItemSelect = (checked,item)=>{
-        if(checked){
+    const cartItemSelect = (checked, item) => {
+        if (checked) {
             dispath(addItem(item))
-        }else{
+        } else {
             dispath(removeItem(item))
         }
     }
 
-    function checkOut(){
-        if(data.length===0){
+    function checkOut() {
+        if (data.length === 0) {
             toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: "Chưa chọn sản phẩm thanh toán", life: 1000 });
-        }else{
+        } else {
             navigate("/checkout", { replace: true });
         }
 
 
-        
+
     }
 
-    
+
 
 
     const showCartItem = cartItem.map((item, index) =>
 
         <tr key={index}>
-            <td><input type="checkbox" onChange={(e)=>cartItemSelect(e.target.checked,item)}/></td>
+            <td><input type="checkbox" onChange={(e) => cartItemSelect(e.target.checked, item)} /></td>
             <td>
                 <div className="img">
-                    <a href="#"><img src={item.book.image} alt="Image" /></a>
+                    <a href="/"><img src={item.book.image} alt="Image" /></a>
                     <p>{item.book.name}</p>
                 </div>
             </td>
@@ -119,7 +119,7 @@ export default function Cart() {
                 </div>
             </td>
             <td>{item.book.price * item.qty}</td>
-            <td><button onClick={()=>removeItemOfCart(item.id)}><i className="pi pi-trash"></i></button></td>
+            <td><button onClick={() => removeItemOfCart(item.id)}><i className="pi pi-trash"></i></button></td>
         </tr>
 
 
@@ -154,12 +154,23 @@ export default function Cart() {
                         <div className="cart-page-inner">
                             <div className="row">
                                 <div className="col-md-12">
-                                    <div className="coupon">
-                                        <input type="text" placeholder="Coupon Code" />
-                                        <button>Mã giảm giá</button>
+                                    <div className="w-full bg-white drop-shadow-2xl pb-3">
+                                        <div className="w-[90%] m-auto flex items-center relative">
+                                            <span className="text-xl pt-2">Giao tới</span>
+                                            <Link to="/cart/address-list" className="font-semibold text-xl pt-2 cursor-pointer absolute right-5 text-[#ff1616] hover:opacity-50" >
+                                                <span>Thay đổi</span>
+                                            </Link>
+                                        </div>
+                                        <div className="w-[90%] m-auto flex items-center relative">
+                                            <span className="font-semibold text-xl pt-2">Đặng Văn Kiệt</span>
+                                            <span className="font-semibold text-xl pt-2 pl-4"> 0397919744</span>
+                                        </div>
+                                        <div className="w-[90%] m-auto mt-2">
+                                            <p className="font-medium text-[#666] w-[80%]">114/15/44 Phạm văn chiêu, Phường 09, Quận Gò Vấp, Hồ Chí Minh</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="col-md-12">
+                                <div className="col-md-12 mt-4">
                                     <div className="cart-summary">
                                         <div className="cart-content">
                                             <h1>Cart Summary</h1>
@@ -168,7 +179,7 @@ export default function Cart() {
                                             <h2>Grand Total<span>$100</span></h2>
                                         </div>
                                         <div className="cart-btn">
-                                            <button onClick={()=>checkOut()}>Checkout</button>
+                                            <button onClick={() => checkOut()}>Checkout</button>
                                         </div>
                                     </div>
                                 </div>

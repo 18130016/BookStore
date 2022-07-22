@@ -23,6 +23,7 @@ import SalesAnalysis from './admin/components/sales-analysis/SalesAnalysis';
 import Accounts from './admin/components/accounts/Accounts';
 import Dashboard from './admin/pages/Dashboard';
 import Blank from './admin/pages/Blank';
+import AddressList from './page/address/address-list/AddressList';
 
 
 function App() {
@@ -36,7 +37,10 @@ function App() {
         <Route path="/login" element={<Login></Login>} />
         <Route path='/register' element={<Register></Register>} />
         <Route path='/product/:id' element={<ProductDetail></ProductDetail>} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<Cart />}>
+        </Route>
+        <Route path="/cart/address-list" element={<AddressList />} />
+
         <Route path="/account" element={<MyAccount />} />
         <Route path="/farvorite" element={<ListFarvorite />} />
         <Route path="/checkout" element={<Checkout />} />

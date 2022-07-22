@@ -10,10 +10,6 @@ import FarvoriteService from "../service/FarvoriteService";
 import { useSelector } from "react-redux";
 import { Rating } from 'primereact/rating';
 import CommentService from "../service/CommentService";
-import { current } from "@reduxjs/toolkit";
-
-
-
 
 
 export default function ProductDetail() {
@@ -38,14 +34,14 @@ export default function ProductDetail() {
     }
 
 
-    const [countCmt,setCountCmt] = useState(0)
+    const [countCmt, setCountCmt] = useState(0)
     const [qty, setQty] = useState(1)
     const [product, setProduct] = useState(initProduct);
-    const [listComment, setListComment] =useState([])
+    const [listComment, setListComment] = useState([])
 
 
     useEffect(() => {
-        commentService.getCommentByProductId(id).then((data)=>{
+        commentService.getCommentByProductId(id).then((data) => {
             setListComment(data)
             setCountCmt(data.length)
         })
@@ -73,7 +69,7 @@ export default function ProductDetail() {
 
     function addFarvorite(book_id) {
         const current = new Date();
-        const time = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()} | ${current.getHours()}:${current.getMinutes()}`;
+        const time = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()} | ${current.getHours()}:${current.getMinutes()}`;
 
         let fav = {
             book_id: book_id,
@@ -101,44 +97,40 @@ export default function ProductDetail() {
         setQty(qty + 1)
     }
 
-    const [comment,setComment] =useState()
+    const [comment, setComment] = useState()
     const [rates, setRate] = useState(null);
 
-    function sendComment(){
+    function sendComment() {
 
         const current = new Date();
-        const time = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()} | ${current.getHours()}:${current.getMinutes()}`;
+        const time = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()} | ${current.getHours()}:${current.getMinutes()}`;
 
 
-        let datasend={
+        let datasend = {
             user_id: parseInt(localStorage.getItem("userId")),
-            book_id:parseInt(id),
-            content:comment,
-            time_create:time,
-            rate:rates
+            book_id: parseInt(id),
+            content: comment,
+            time_create: time,
+            rate: rates
         }
-        if(islogin===true){
-        //    commentService.sendComment(datasend).then((data)=>{
-        //     console.log(data)
-        //    })
-        console.log(time)
-        }else{
+        if (islogin === true) {
+            //    commentService.sendComment(datasend).then((data)=>{
+            //     console.log(data)
+            //    })
+            console.log(time)
+        } else {
             console.log("nớt")
         }
 
-    }   
+    }
 
-    const showListComment = listComment.map((item,index)=>
+    const showListComment = listComment.map((item, index) =>
         <div key={index}>
             <p>Rate: {item.rate}</p>
             <p>By:{item.user.full_name} at {item.time_create}</p>
             <p>Content: {item.content}</p>
         </div>
-    ) 
-
-
-
-
+    )
     return (
 
         <div className="services-area2">
@@ -154,28 +146,25 @@ export default function ProductDetail() {
                                 <div className=" col-md-9 features-caption">
                                     <h3>{product.name}</h3>
                                     <p>{product.author.join(" | ")}</p>
-                                    <div className="price">
-                                        <p>Price: <span>{product.price}$</span></p>
+                                    <div className="flex items-center price">
+                                        <span>Price:</span>
+                                        <span className="pl-4">{product.price} VND</span>
                                     </div>
-                                    <div className="review">
+                                    <div className="review flex">
                                         <div className="rating">
-                                            <i className="pi pi-star"></i>
-                                            <i className="pi pi-star"></i>
-                                            <i className="pi pi-star"></i>
-                                            <i className="pi pi-star"></i>
-                                            <i className="pi pi-star-half"></i>
+                                            <Rating value={product.rate} readonly={true} />
                                         </div>
-                                        <p>({countCmt} Review)</p>
+                                        <p className="pl-2">({countCmt} Review)</p>
                                     </div>
                                     <div className="qty">
-                                        <button className="btn-minus" onClick={() => clickMinus()} ><i className="pi pi-minus"></i></button>
-                                        <input type="text" value={qty} onChange={(e) => setQty(e.target.value)} />
-                                        <button className="btn-plus" onClick={() => clickPlus()}><i className="pi pi-plus"></i></button>
+                                        <button className="btn-minus px-2 border border-solid border-gray-400" onClick={() => clickMinus()} ><i className="pi pi-minus"></i></button>
+                                        <span className="font-semibold px-4 border border-solid border-gray-200">{qty}</span>
+                                        <button className="btn-plus px-2 border border-solid border-gray-400" onClick={() => clickPlus()}><i className="pi pi-plus"></i></button>
                                     </div>
 
                                     <div className="add-to-cart">
-                                        <a onClick={() => addCartItem(product.id)} className="white-btn mr-10">Add to Cart</a>
-                                        <a onClick={() => addFarvorite(product.id)} title="Thêm vào danh sách yêu thích" className="border-btn share-btn"><i className="pi pi-heart"></i></a>
+                                        <a href="/" onClick={() => addCartItem(product.id)} className="white-btn mr-10">Add to Cart</a>
+                                        <a href="/" onClick={() => addFarvorite(product.id)} title="Thêm vào danh sách yêu thích" className="border-btn share-btn"><i className="pi pi-heart"></i></a>
                                     </div>
                                 </div>
 
@@ -202,22 +191,22 @@ export default function ProductDetail() {
 
                         <Tab.Content>
                             <Tab.Pane eventKey="first">
-                                <div>
+                                <div className="w-full drop-shadow-xl min-h-[200px] bg-white p-3">
                                     {product.descripton}
                                 </div>
 
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
-                                <div>
+                                <div className="w-full drop-shadow-xl min-h-[200px]  bg-white ">
                                     {showListComment}
                                 </div>
 
-                                <div>
-                                <Rating value={rates} cancel={false} onChange={(e) => setRate(e.value)}  />
+                                {/* <div>
+                                    <Rating value={rates} cancel={false} onChange={(e) => setRate(e.value)} />
 
-                                    <input type="text" onChange={(e)=>setComment(e.target.value)} />
-                                    <button onClick={()=>sendComment()}>Gửi</button>
-                                </div>
+                                    <input type="text" onChange={(e) => setComment(e.target.value)} />
+                                    <button onClick={() => sendComment()}>Gửi</button>
+                                </div> */}
                             </Tab.Pane>
                         </Tab.Content>
 

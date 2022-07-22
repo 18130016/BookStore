@@ -29,18 +29,28 @@ const listAddress = [
 ];
 
 const AddressList = () => {
+  const [addressData, setAddressData] = React.useState(listAddress);
   const [openCreateAddress, setOpenCreateAddress] = React.useState(false);
   const handleCloseCreateAddress = () => {
     setOpenCreateAddress(false);
   };
+
   document.title = "Danh sách địa chỉ";
 
   const [isDefaultAddress, setIsDefaultAddress] = React.useState(1);
 
   return (
     <div className="w-full">
-      {listAddress.map((item) => (
-        <div key={item.id} className="w-full mt-10">
+      <div className="w-[80%] m-auto mt-3">
+        <button
+          onClick={() => setOpenCreateAddress(true)}
+          className=" bg-[#fe1616] px-14 py-2 drop-shadow-lg text-white font-semibold rounded-lg"
+        >
+          THÊM ĐỊA CHỈ
+        </button>
+      </div>
+      {addressData.map((item) => (
+        <div key={item.id} className="w-full mt-4">
           <div className="w-[80%] h-40 bg-gray-200 m-auto rounded-lg">
             <div className="w-[90%] m-auto border-b border-solid border-gray-300 h-[50%] flex flex-row items-center">
               <div className="w-2/4 flex flex-row items-center ml-10">
@@ -96,13 +106,6 @@ const AddressList = () => {
           </div>
         </div>
       ))}
-
-      <div
-        onClick={() => setOpenCreateAddress(true)}
-        className="cursor-pointer hover:bg-gray-700 w-[80%] h-20 m-auto mt-3 rou bg-gray-500 rounded-lg flex items-center justify-center"
-      >
-        <span className="font-semibold text-2xl text-white">THÊM ĐỊA CHỈ</span>
-      </div>
 
       <CreateAddress
         openCreateAddress={openCreateAddress}

@@ -100,7 +100,7 @@ export default function Products() {
 
     const showProduct = products
         .map((item, index) => {
-        
+
             return (<div key={index} className="col-md-3">
                 <BookCard book={item}></BookCard>
             </div>)
@@ -170,9 +170,7 @@ export default function Products() {
                             {showProduct}
                         </div>
                         <div>
-
                             <Paginator first={first} rows={8} totalRecords={totalProduct} onPageChange={onBasicPageChange}></Paginator>
-
                         </div>
                     </div>
 

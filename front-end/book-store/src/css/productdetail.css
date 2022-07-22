@@ -5,16 +5,13 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    border: 10px solid #ff1616;
+    background-color: #fff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     padding: 29px 20px 29px 80px;
-    border-style: groove;
-    
+    margin-top: 20px;
 }
 
-.features-img img{
-    width: 290px;
-    height: 430px;
-}
+
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .services-area2 .single-services {
@@ -127,9 +124,7 @@
     display: inline-block;
     font-size: 13px;
 }
-.services-area2 .single-services .features-caption .price {
-    display: inline-block;
-}
+
 .services-area2 .single-services .features-caption .price span {
     font-weight: 500;
 
