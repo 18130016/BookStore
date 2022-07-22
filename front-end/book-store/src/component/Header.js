@@ -123,7 +123,7 @@ export default function Header() {
                                         <li><NavLink to="/">Home</NavLink></li>
                                         <li><NavLink to="/products">Category</NavLink></li>
                                         <li><NavLink to="/ad">About</NavLink></li>
-                                        <li><NavLink to="/asd">Blog</NavLink></li>
+                                        <li><NavLink to="/blog">Blog</NavLink></li>
                                         <li><NavLink to="/asda">Contect</NavLink></li>
                                     </ul>
                                 </nav>

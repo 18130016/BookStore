@@ -5,6 +5,9 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
+import "./admin/assets/libs/boxicons-2.1.1/css/boxicons.min.css";
+import "./admin/scss/App.scss";
+
 import Header from './component/Header';
 import Home from './page/Home';
 import Products from './page/Products'
@@ -24,6 +27,7 @@ import Accounts from './admin/components/accounts/Accounts';
 import Dashboard from './admin/pages/Dashboard';
 import Blank from './admin/pages/Blank';
 import AddressList from './page/address/address-list/AddressList';
+import Blog from './page/blog/Blog';
 
 
 function App() {
@@ -42,6 +46,7 @@ function App() {
         <Route path="/cart/address-list" element={<AddressList />} />
 
         <Route path="/account" element={<MyAccount />} />
+        <Route path="/blog" element={<Blog />} />
         <Route path="/farvorite" element={<ListFarvorite />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/admin" element={<MainLayout />}>
