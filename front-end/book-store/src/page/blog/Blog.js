@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import BookService from '../../service/BookService';
+import CreateBlog from './CreateBlog';
 
 const Blog = () => {
 
+    const [openCreateBlog, setOpenCreateBlog] = useState(false);
+    const handleCloseCreateBlog = () => {
+        setOpenCreateBlog(false);
+    }
     const [books, setBooks] = useState([]);
     const bookService = new BookService();
 
@@ -21,9 +26,11 @@ const Blog = () => {
         <div className='w-[80%] m-auto'>
             <button
                 className=" bg-[#fe1616] px-14 py-2 mt-5 drop-shadow-lg text-white font-semibold rounded-lg"
+                onClick={() => setOpenCreateBlog(true)}
             >
                 TẠO BLOG MỚI
             </button>
+            <CreateBlog openCreateBlog={openCreateBlog} handleCloseCreateBlog={handleCloseCreateBlog} />
             {books.map(book => (
                 <div className='w-full flex bg-white drop-shadow-xl mb-5 mt-5 p-2 rounded-md'>
                     <div className='w-[30%]  flex items-center justify-center'>

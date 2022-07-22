@@ -10,7 +10,7 @@ import "./admin/scss/App.scss";
 
 import Header from './component/Header';
 import Home from './page/Home';
-import Products from './page/Products'
+import ProductsCategory from './page/ProductsCategory'
 import { Route, Routes } from 'react-router-dom';
 import Footer from './component/Footer';
 import Login from './page/Login';
@@ -28,6 +28,7 @@ import Dashboard from './admin/pages/Dashboard';
 import Blank from './admin/pages/Blank';
 import AddressList from './page/address/address-list/AddressList';
 import Blog from './page/blog/Blog';
+import ProductsAdmin from './admin/components/products/ProductsAdmin';
 
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<Home title="Home page"></Home>} />
-        <Route path='/products' element={<Products></Products>} />
+        <Route path='/products' element={<ProductsAdmin></ProductsAdmin>} />
         <Route path="/login" element={<Login></Login>} />
         <Route path='/register' element={<Register></Register>} />
         <Route path='/product/:id' element={<ProductDetail></ProductDetail>} />
@@ -46,13 +47,14 @@ function App() {
         <Route path="/cart/address-list" element={<AddressList />} />
 
         <Route path="/account" element={<MyAccount />} />
+        <Route path="/categories" element={<ProductsCategory />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/farvorite" element={<ListFarvorite />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/admin" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="/admin/orders" element={<Blank />} />
-          <Route path="/admin/products" element={<Products />} />
+          <Route path="/admin/products" element={<ProductsAdmin />} />
           <Route path="/admin/customers" element={<Blank />} />
           <Route path="/admin/sales-analysis" element={<SalesAnalysis />} />
           <Route path="/admin/accounts" element={<Accounts />} />

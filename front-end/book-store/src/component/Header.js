@@ -9,13 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { notAdmin,logout } from '../app/isLogin'
 import jwt_decode from "jwt-decode";
 
-
 import { useNavigate } from 'react-router-dom';
-
-
-
-
-
 
 export default function Header() {
     const userservice = new UserService();
@@ -80,13 +74,6 @@ export default function Header() {
 
     }
 
-
-
-
-
-
-
-
     return (
         <div className='header-area'>
             <div className='header-top'>
@@ -121,7 +108,7 @@ export default function Header() {
                                 <nav>
                                     <ul id="navigation">
                                         <li><NavLink to="/">Home</NavLink></li>
-                                        <li><NavLink to="/products">Category</NavLink></li>
+                                        <li><NavLink to="/categories">Category</NavLink></li>
                                         <li><NavLink to="/ad">About</NavLink></li>
                                         <li><NavLink to="/blog">Blog</NavLink></li>
                                         <li><NavLink to="/asda">Contect</NavLink></li>

@@ -1,19 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
-import { productsColumn, productsRow } from "../../constants/data";
+import { productsColumn } from "../../constants/data";
 import { DataGrid } from "@mui/x-data-grid";
 import { Modal, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
+import BookService from '../../../service/BookService';
 
 const style = {
   position: "relative",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
-  height: 700,
+  width: "40%",
+  height: "90%",
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -26,7 +27,20 @@ const styleForInput =
   "px-4 outline-none bg-[#EDEDF2] w-full h-12 rounded-lg placeholder:italic placeholder:text-state-400 mt-4";
 
 const ProductsAdmin = () => {
-  const [data, setData] = React.useState(productsRow);
+  const bookService = new BookService();
+  const [data, setData] = React.useState([]);
+
+  function getApi () {
+    return bookService.getAll();
+  }
+
+  useEffect(() => {
+    getApi().then(data => {
+      setData(data);
+    });
+  }, []);
+
+  console.log(data);
 
   const [productImage, setProductImage] = useState();
   const [preview, setPreview] = useState();
@@ -96,7 +110,7 @@ const ProductsAdmin = () => {
 
   const [productName, setProductName] = useState();
   const [description, setDescription] = useState();
-  const [quantity, setQuantity] = useState();
+  const [author, setAuthor] = useState();
 
   const [productNameUpdate, setProductNameUpdate] = useState();
   const [descriptionUpdate, setDescriptionUpdate] = useState();
@@ -161,8 +175,8 @@ const ProductsAdmin = () => {
       <DataGrid
         rows={data}
         columns={productsColumn.concat(columnRow)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
+        pageSize={7}
+        rowsPerPageOptions={[7]}
       />
 
       {/* // Modal Update Product */}
@@ -262,21 +276,20 @@ const ProductsAdmin = () => {
                 setProductName(e.target.value);
               }}
             />
-            <input
+            <textarea
               value={description}
-              className={`${styleForInput}`}
+              className={`${styleForInput} h-24 pt-1`}
               placeholder="Nhập mô tả sản phẩm"
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
             />
             <input
-              value={quantity}
-              type="number"
+              value={author}
               className={`${styleForInput}`}
-              placeholder="Nhập số lượng sản phẩm"
+              placeholder="Nhập tên tác giả"
               onChange={(e) => {
-                setQuantity(e.target.value);
+                setAuthor(e.target.value);
               }}
             />
             <Button

@@ -81,53 +81,53 @@ const data = {
 }
 
 export const productsColumn = [
-    { field: "id", headerName: "Id", width: 70, align: 'center',  headerAlign: 'center', },
-    { field: "name", headerName: "Name", width: 200, align: 'center',  headerAlign: 'center', },
+    { field: "id", headerName: "Id", width: 70, height: 100, align: 'center',  headerAlign: 'center', },
+    { field: "name", headerName: "Name", width: 250,  headerAlign: 'center', },
     {
         field: "image", headerName: "Images", width: 150,
         headerAlign: 'center',
         renderCell: (params) => {
             return (
-                <div>
+                <div className="object-cover bg-no-repeat">
                     <img src={params.row.image} alt="img" />
                 </div>
             )
         }
     },
-    { field: "description", headerName: "Description", width: 400, align: 'center', headerAlign: 'center',},
-    { field: "quantity", headerName: "Quantity", width: 100, align: 'center',  headerAlign: 'center',},
+    { field: "author", headerName: "Author", width: 200, align: 'center',  headerAlign: 'center',},
+    { field: "descripton", headerName: "Description", width: 200,  headerAlign: 'center',},
 ];
 
-export const productsRow = [
-    {
-        id: 1,
-        name: "Nón bảo hiểm 1",
-        image: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        description: "Nón bảo hiểm chất lượng cao",
-        quantity: 10
-    },
-    {
-        id: 2,
-        name: "Nón bảo hiểm 2",
-        image: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        description: "Nón bảo hiểm chất lượng cao",
-        quantity: 10
-    },
-    {
-        id: 3,
-        name: "Nón bảo hiểm 3",
-        image: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        description: "Nón bảo hiểm chất lượng cao",
-        quantity: 10
-    },
-    {
-        id: 4,
-        name: "Nón bảo hiểm 4",
-        image: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        description: "Nón bảo hiểm chất lượng cao",
-        quantity: 10
-    },
-];
+// export const productsRow = [
+//     {
+//         id: 1,
+//         name: "Nón bảo hiểm 1",
+//         image: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+//         description: "Nón bảo hiểm chất lượng cao",
+//         quantity: 10
+//     },
+//     {
+//         id: 2,
+//         name: "Nón bảo hiểm 2",
+//         image: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+//         description: "Nón bảo hiểm chất lượng cao",
+//         quantity: 10
+//     },
+//     {
+//         id: 3,
+//         name: "Nón bảo hiểm 3",
+//         image: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+//         description: "Nón bảo hiểm chất lượng cao",
+//         quantity: 10
+//     },
+//     {
+//         id: 4,
+//         name: "Nón bảo hiểm 4",
+//         image: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+//         description: "Nón bảo hiểm chất lượng cao",
+//         quantity: 10
+//     },
+// ];
 
 export const accountsColumn = [
     { field: "id", headerName: "Id", width: 70, align: 'center',  headerAlign: 'center'},

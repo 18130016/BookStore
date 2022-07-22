@@ -7,7 +7,7 @@ import BookCard from "../component/BookCard";
 import CheckBox from "../component/CheckBox";
 import BookService from "../service/BookService";
 
-export default function Products() {
+export default function ProductsCategory() {
     const [first, setFirst] = useState(0);
     const onBasicPageChange = (event) => {
         setFilter({ ...filter, page: event.page + 1 })
