@@ -49,7 +49,6 @@
 }
 .login-form-area .login-form .input-box {
     padding-top: 35px;
-    padding-bottom: 75px;
 }
 @media (max-width: 575px) {
     .login-form-area .login-form .input-box {

@@ -13,12 +13,12 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(async (req) => {
     const userservice = new UserService()
 
-    if(!req.url.includes("/api/login")  && !req.url.includes("/api/register") && !req.url.includes("/api/selling") && !req.url.includes("/api/book")){
+    if (!req.url.includes("/api/login") && !req.url.includes("/api/register") && !req.url.includes("/api/selling") && !req.url.includes("/api/book")) {
         const token = userservice.getToken()
         req.headers.common.Authorization = "Bearer " + token;
         return req;
     }
-    
+
     return req;
 });
 

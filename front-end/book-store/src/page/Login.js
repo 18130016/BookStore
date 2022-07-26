@@ -1,18 +1,35 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-
 import { useDispatch } from 'react-redux'
 import { isAdmin, login } from '../app/isLogin'
 import '../css/login.css';
 import UserService from '../service/UserService';
 import { Toast } from 'primereact/toast';
-
+import { GoogleButton } from 'react-google-button';
+import { IconFacebook } from '../utils/svg';
+import { UserAuth } from '../Context/AuthContext';
 
 export default function Login() {
 
-    const userService = new UserService();
+    const {googleSignIn, user} = UserAuth();
+
     const navigate = useNavigate();
+
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn();
+        }catch(error){
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        if(user !== null){
+            navigate('/');
+        }
+    }, [user]);
+
+    const userService = new UserService();
     const toast = useRef(null);
     const dispatch = useDispatch()
 
@@ -45,8 +62,6 @@ export default function Login() {
         })
     }
 
-
-
     return (
         <div>
             <Toast ref={toast} />
@@ -65,6 +80,14 @@ export default function Login() {
                         <div className="single-input-fields">
                             <label>Mật khẩu</label>
                             <input type="password" placeholder="Mật khẩu" onChange={(e) => setLoginForm({ ...loginForm, passWord: e.target.value })} />
+                        </div>
+                    </div>
+
+                    <div className='w-full flex items-center mb-5'>
+                        <GoogleButton onClick = {handleGoogleSignIn} />
+                        <div className='hover:drop-shadow-2xl flex cursor-pointer bg-[#4c69a7] h-[50px] w-[250px] items-center justify-center rounded-sm drop-shadow-lg ml-5'>
+                            <IconFacebook />
+                            <span className='text-white pl-2'>Sign in with Facebook</span>
                         </div>
                     </div>
 

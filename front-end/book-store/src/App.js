@@ -29,38 +29,41 @@ import Blank from './admin/pages/Blank';
 import AddressList from './page/address/address-list/AddressList';
 import Blog from './page/blog/Blog';
 import ProductsAdmin from './admin/components/products/ProductsAdmin';
+import { AuthContextProvider } from './Context/AuthContext';
 
 
 function App() {
 
   return (
     <div>
-      <Header />
-      <Routes>
-        <Route path='/' element={<Home title="Home page"></Home>} />
-        <Route path='/products' element={<ProductsAdmin></ProductsAdmin>} />
-        <Route path="/login" element={<Login></Login>} />
-        <Route path='/register' element={<Register></Register>} />
-        <Route path='/product/:id' element={<ProductDetail></ProductDetail>} />
-        <Route path="/cart" element={<Cart />}>
-        </Route>
-        <Route path="/cart/address-list" element={<AddressList />} />
+      <AuthContextProvider>
+        <Header />
+        <Routes>
+          <Route path='/' element={<Home title="Home page"></Home>} />
+          <Route path='/products' element={<ProductsAdmin></ProductsAdmin>} />
+          <Route path="/login" element={<Login></Login>} />
+          <Route path='/register' element={<Register></Register>} />
+          <Route path='/product/:id' element={<ProductDetail></ProductDetail>} />
+          <Route path="/cart" element={<Cart />}>
+          </Route>
+          <Route path="/cart/address-list" element={<AddressList />} />
 
-        <Route path="/account" element={<MyAccount />} />
-        <Route path="/categories" element={<ProductsCategory />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/farvorite" element={<ListFarvorite />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/admin" element={<MainLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/admin/orders" element={<Blank />} />
-          <Route path="/admin/products" element={<ProductsAdmin />} />
-          <Route path="/admin/customers" element={<Blank />} />
-          <Route path="/admin/sales-analysis" element={<SalesAnalysis />} />
-          <Route path="/admin/accounts" element={<Accounts />} />
-        </Route>
-      </Routes>
-      <Footer />
+          <Route path="/account" element={<MyAccount />} />
+          <Route path="/categories" element={<ProductsCategory />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/farvorite" element={<ListFarvorite />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/admin" element={<MainLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="/admin/orders" element={<Blank />} />
+            <Route path="/admin/products" element={<ProductsAdmin />} />
+            <Route path="/admin/customers" element={<Blank />} />
+            <Route path="/admin/sales-analysis" element={<SalesAnalysis />} />
+            <Route path="/admin/accounts" element={<Accounts />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </AuthContextProvider>
 
     </div>
   );
