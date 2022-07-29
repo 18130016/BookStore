@@ -1,6 +1,6 @@
 const sidebarNav = [
     {
-        link: '/admin',
+        link: '/shop',
         section: 'home',
         icon: <i className='bx bx-home-alt'></i>,
         text: 'Home'

@@ -123,16 +123,9 @@
     margin: 0;
     align-items: center;
 }
-.header-area .header-top .header-info-right ul li {
-    display: inline-block;
-    position: relative;
-    margin-left: 33px;
-    justify-items: center;
-}
 
-.header-area .header-top .header-info-right ul li .favorite{
-   padding-top: 25px;
-}
+
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .header-area .header-top .header-info-right ul li {
         margin-left: 20px;
@@ -153,14 +146,7 @@
         margin-left: 20px;
     }
 }
-.header-area .header-top .header-info-right ul li a {
-    font-size: 14px;
-    text-transform: capitalize;
-    color: #454e6d;
-    font-weight: 400;
-    display: inline-block;
-    text-decoration: none;
-}
+
 .header-area .header-top .header-info-right ul li a:hover {
     color: #ff1616;
 }

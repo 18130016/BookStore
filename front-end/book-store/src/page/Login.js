@@ -23,11 +23,7 @@ export default function Login() {
             console.log(error);
         }
     }
-    useEffect(() => {
-        if(user !== null){
-            navigate('/');
-        }
-    }, [user]);
+    
 
     const userService = new UserService();
     const toast = useRef(null);

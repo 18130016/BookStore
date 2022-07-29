@@ -11,6 +11,7 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { FreeMode, Pagination, Autoplay } from "swiper";
 import { Paginator } from 'primereact/paginator';
+import Header from '../component/Header';
 
 
 const pagination = {
@@ -81,7 +82,7 @@ export default function Home() {
 
     return (
         <div className='home-area'>
-
+            <Header />
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-12'>
@@ -142,7 +143,7 @@ export default function Home() {
                             slidesPerView={5}
                             freeMode={true}
                             autoplay = {{
-                                delay: 2000,
+                                delay: 3000,
                                 disableOnInteraction: false,
                             }}
                             pagination={pagination}

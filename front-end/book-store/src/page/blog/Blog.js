@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Header from '../../component/Header';
 import BookService from '../../service/BookService';
 import CreateBlog from './CreateBlog';
 
@@ -24,6 +25,7 @@ const Blog = () => {
 
     return (
         <div className='w-[80%] m-auto'>
+            <Header />
             <button
                 className=" bg-[#fe1616] px-14 py-2 mt-5 drop-shadow-lg text-white font-semibold rounded-lg"
                 onClick={() => setOpenCreateBlog(true)}

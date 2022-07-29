@@ -3,6 +3,7 @@ import UserService from "../service/UserService";
 import jwt_decode from "jwt-decode";
 import AddressService from "../service/AddressService";
 import OrderService from "../service/OrderService";
+import Header from "../component/Header";
 
 
 export default function MyAccount(){
@@ -34,18 +35,10 @@ export default function MyAccount(){
         detail:""
     }
 
-
-
     const [user,setUser] = useState(initUser);
     const [listAddress, setListAddress ] = useState([])
     const [address,setAddress]=useState(initAddress)
     const [listOrder,setListOrder]= useState([])
-
-
-
-    
-    
-   
 
     useEffect(()=>{
         userservice.getUserByUserName(username).then((data)=>{
@@ -100,6 +93,7 @@ export default function MyAccount(){
 
     return(
         <div className="container">
+            <Header />
             <div>
                 <h2>User data</h2>
                 <p>user name :{user.userName}</p>

@@ -31,7 +31,7 @@
         }
 
         img {
-            --size: 55px;
+            
             width: var(--size);
             height: var(--size);
         }
@@ -59,7 +59,7 @@
             @include flex(center, flex-start);
             position: relative;
             margin-bottom: 2rem;
-            padding-left: 20%;
+            padding-left: 10%;
             transition: color 0.3s ease-in-out;
 
             @include tablet {
@@ -103,7 +103,7 @@
                 --size: 40px;
                 width: var(--size);
                 height: var(--size);
-                margin-right: 3rem;
+                margin-right: 2rem;
                 @include flex(center, center);
 
                 @include tablet {

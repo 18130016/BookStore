@@ -3,6 +3,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import CreateAddress from "../address-create/CreateAddress";
+import Header from "../../../component/Header";
 
 const listAddress = [
   {
@@ -41,6 +42,7 @@ const AddressList = () => {
 
   return (
     <div className="w-full">
+      <Header />
       <div className="w-[80%] m-auto mt-3">
         <button
           onClick={() => setOpenCreateAddress(true)}

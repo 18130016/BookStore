@@ -6,6 +6,7 @@ import { Toast } from 'primereact/toast';
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem, removeAll } from "../app/ListCartItem";
 import { Link, useNavigate } from "react-router-dom";
+import Header from "../component/Header";
 
 export default function Cart() {
     let uID = localStorage.getItem("userId")
@@ -128,6 +129,7 @@ export default function Cart() {
     return (
         <div className="cart-page">
             <Toast ref={toast} />
+            <Header />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-8">

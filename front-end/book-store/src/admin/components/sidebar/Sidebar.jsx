@@ -3,6 +3,7 @@ import "./sidebar.scss";
 import { Link, useLocation } from "react-router-dom";
 import { images } from "../../constants";
 import sidebarNav from "../../configs/sidebarNav";
+import logo from '../../../img/logo.webp';
 
 const Sidebar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -32,7 +33,9 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar__logo">
-        <img src={images.logo} alt="" />
+        <Link to="/">
+        <img src={logo} alt="" />
+        </Link>
         <div className="sidebar-close" onClick={closeSidebar}>
           <i className="bx bx-x"></i>
         </div>
