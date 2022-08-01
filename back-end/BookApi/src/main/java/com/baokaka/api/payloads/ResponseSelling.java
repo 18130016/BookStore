@@ -10,7 +10,7 @@ public class ResponseSelling implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private  Book book;
+	private  BookResponse book;
 	/**
 	 * @param id
 	 * @param book
@@ -18,35 +18,30 @@ public class ResponseSelling implements Serializable{
 	public ResponseSelling() {
 		
 	}
-	public ResponseSelling(int id, Book book) {
+	
+	public ResponseSelling(int id, BookResponse book) {
+		super();
 		this.id = id;
 		this.book = book;
 	}
-	/**
-	 * @return the id
-	 */
+
 	public int getId() {
 		return id;
 	}
-	/**
-	 * @param id the id to set
-	 */
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	/**
-	 * @return the book
-	 */
-	public Book getBook() {
+
+	public BookResponse getBook() {
 		return book;
 	}
-	/**
-	 * @param book the book to set
-	 */
-	public void setBook(Book book) {
+
+	public void setBook(BookResponse book) {
 		this.book = book;
 	}
-	
+
+
 	
 	
 	

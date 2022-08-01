@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import com.baokaka.api.model.Book;
 
+
+
 public class ResponseCartItem implements Serializable{
 	/**
 	 * 
@@ -24,7 +26,6 @@ public class ResponseCartItem implements Serializable{
 		
 	}
 	public ResponseCartItem(int id, Book book, int user_id, int qty) {
-		super();
 		this.id = id;
 		this.book = book;
 		this.user_id = user_id;
@@ -54,6 +55,12 @@ public class ResponseCartItem implements Serializable{
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 }

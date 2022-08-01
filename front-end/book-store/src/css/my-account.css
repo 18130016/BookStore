@@ -1,0 +1,99 @@
+.account {
+    margin-top: 25px;
+}
+
+.content-box-1{
+    min-height: 350px;
+    border: 0.1px solid rgba(219, 219, 219, 0.521);
+    box-shadow: 3px 3px rgba(128, 128, 128, 0.5);
+    margin-right: 30px;
+}
+
+.content-box-2{
+    min-height: 350px;
+    border: 0.1px solid rgba(219, 219, 219, 0.521);
+    box-shadow: 3px 3px rgba(128, 128, 128, 0.5);
+}
+
+.nav-account-button{
+    margin-top: 15px;
+}
+
+.nav-account-button .nav{
+    flex-direction: column;
+    
+}
+
+.nav-account-button .nav-link{
+    color: black;
+    border-radius: 0;
+}
+
+.nav-account-button .nav-link.active{
+    background-color: rgb(255, 85, 0);
+
+}
+
+.m-address-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(128, 128, 128);
+}
+
+.m-address-header .address-header-2 .account-btn{
+    background-color:  white;
+    color:  rgb(255, 85, 0);
+    font-weight: 500;
+    outline: none;
+    border: 1px  solid  rgb(255, 85, 0);
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
+.m-address-header .address-header-2 .account-btn:hover{
+    color:  white;
+    background-color: rgb(255, 85, 0);
+}
+
+.address-detail-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+}
+
+.address-detail-header span{
+    color: #ff1616;
+}
+
+.address-item{
+    margin-top: 15px;
+    border-bottom: 1px  solid  rgba(120, 120, 120, 0.177);
+}
+
+.address-btn{
+    background-color: white;
+    border: 0px;
+    outline: none;
+    color: #00aec9;
+}
+
+.add-address-md{
+    display: flex;
+}
+
+.btn-new-address{
+    text-align: center;
+}
+
+.btn-new-address button{
+    background-color: white;
+    border: 1px solid #00aec9;
+    color: #00aec9;
+    padding: 5px 30px;
+    border-radius: 5px;
+}
+
+
+

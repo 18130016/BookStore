@@ -2,7 +2,7 @@ package com.baokaka.api.payloads;
 
 import java.io.Serializable;
 
-import com.baokaka.api.model.Book;
+
 
 public class ResponseFavorite implements Serializable{
 	/**
@@ -10,7 +10,7 @@ public class ResponseFavorite implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private Book book;
+	private BookResponse book;
 	private int user_id;
 	private String date_add;
 	/**
@@ -23,7 +23,7 @@ public class ResponseFavorite implements Serializable{
 	public ResponseFavorite() {
 		
 	}
-	public ResponseFavorite(int id, Book book, int user_id, String date_add) {
+	public ResponseFavorite(int id, BookResponse book, int user_id, String date_add) {
 		this.id = id;
 		this.book = book;
 		this.user_id = user_id;
@@ -44,13 +44,13 @@ public class ResponseFavorite implements Serializable{
 	/**
 	 * @return the book
 	 */
-	public Book getBook() {
+	public BookResponse getBook() {
 		return book;
 	}
 	/**
 	 * @param book the book to set
 	 */
-	public void setBook(Book book) {
+	public void setBook(BookResponse book) {
 		this.book = book;
 	}
 	/**

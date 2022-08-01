@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baokaka.api.model.Order;
+import com.baokaka.api.payloads.AuthResponse;
 import com.baokaka.api.payloads.ResponseOrder;
 import com.baokaka.api.repository.BookRepository;
 import com.baokaka.api.repository.OrderRepository;
+import com.baokaka.api.service.OrderService;
 
-@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 @RestController
 @RequestMapping(path ="/api/order")
 public class OrderController {
@@ -32,36 +33,43 @@ public class OrderController {
 	@Autowired
 	public BookRepository bookRep;
 	
+	@Autowired
+	public OrderService orderService;
+	
 	@GetMapping("/{id}")
 	public List<ResponseOrder> getOrderByUserId(@PathVariable("id") int id){
-		List<ResponseOrder> list = new ArrayList<ResponseOrder>();
-		for (Order order : orderRepository.findAll()) {
-			if(order.getUser_id() == id) {
-				list.add(new ResponseOrder(order.getId(),bookRep.getById(order.getBook_id()),
-						order.getUser_id(),order.getQty(),order.getAddress_id(),
-						order.getStatus(),order.getCreate_date()));
-			}
-		}
-		return list;
+		return orderService.getOrder(id);
 	}
 	@PostMapping("")
-	public Order addOrder(@RequestBody Order oder) {
-		return orderRepository.save(oder);
+	public AuthResponse addOrder(@RequestBody Order oder) {
+		try {
+			orderRepository.save(oder);
+			return new AuthResponse(false,"Đặt hàng thành công");
+			
+		} catch (Exception e) {
+			return new AuthResponse(false,"Đặt hàng thất bại");
+		}
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id ,@RequestBody Order addr){
+	public AuthResponse update(@PathVariable("id") int id ,@RequestBody Order addr){
 		try {
 			addr.setId(id);
 			orderRepository.save(addr);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new AuthResponse(true,"Cập nhật thành công");
 		}catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new AuthResponse(false,"Cập nhật thất bại");
 		}
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable("id") int id) {
-		orderRepository.deleteById(id);
+	public AuthResponse deleteById(@PathVariable("id") int id) {
+		try {
+			orderRepository.deleteById(id);
+			return new AuthResponse(false,"Xóa đơn hàng thành công");
+			
+		} catch (Exception e) {
+			return new AuthResponse(false,"Xóa đơn hàng thất bại");
+		}
 	}
 }

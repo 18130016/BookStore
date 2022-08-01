@@ -19,6 +19,7 @@ public class Comment implements Serializable{
 	private int id;
 	private int user_id;
 	private int book_id;
+	private String time_create;
 	private String content;
 	private int rate;
 	/**
@@ -28,89 +29,67 @@ public class Comment implements Serializable{
 	 * @param content
 	 * @param rate
 	 */
-	public Comment(int id, int user_id, int book_id, String content, int rate) {
-		this.id = id;
-		this.user_id = user_id;
-		this.book_id = book_id;
-		this.content = content;
-		this.rate = rate;
-	}
-	
+
 	public Comment() {
 		
 	}
 
-	/**
-	 * @return the id
-	 */
+	public Comment(int id, int user_id, int book_id, String time_create, String content, int rate) {
+		this.id = id;
+		this.user_id = user_id;
+		this.book_id = book_id;
+		this.time_create = time_create;
+		this.content = content;
+		this.rate = rate;
+	}
+
 	public int getId() {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	/**
-	 * @return the book_id
-	 */
-	public int getBook_id() {
-		return book_id;
-	}
-
-	/**
-	 * @param book_id the book_id to set
-	 */
-	public void setBook_id(int book_id) {
-		this.book_id = book_id;
-	}
-
-	/**
-	 * @return the user_id
-	 */
 	public int getUser_id() {
 		return user_id;
 	}
 
-	/**
-	 * @param user_id the user_id to set
-	 */
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
 
-	/**
-	 * @return the content
-	 */
+	public int getBook_id() {
+		return book_id;
+	}
+
+	public void setBook_id(int book_id) {
+		this.book_id = book_id;
+	}
+
+	public String getTime_create() {
+		return time_create;
+	}
+
+	public void setTime_create(String time_create) {
+		this.time_create = time_create;
+	}
+
 	public String getContent() {
 		return content;
 	}
 
-	/**
-	 * @param content the content to set
-	 */
 	public void setContent(String content) {
 		this.content = content;
 	}
 
-	/**
-	 * @return the rate
-	 */
 	public int getRate() {
 		return rate;
 	}
 
-	/**
-	 * @param rate the rate to set
-	 */
 	public void setRate(int rate) {
 		this.rate = rate;
 	}
-	
-	
-	
+
 	
 }
