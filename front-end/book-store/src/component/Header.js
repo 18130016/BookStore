@@ -39,7 +39,7 @@ export default function Header() {
         const id = open ? 'simple-popper' : undefined;
         const styleIcon = { fontSize: "27px" };
 
-        if (count === true) {
+        if (count === true || userservice.getToken()!== null) {
             const token = userservice.getToken();
             const user = jwt_decode(token).fullName
             if (admin === true) {
@@ -110,17 +110,11 @@ export default function Header() {
                 <div className='container'>
                     <div className='row'>
                         <div className='col-xl-12'>
-                            <div className='flex items-center'>
+                            <div className='flex items-center justify-content-spacebetwent'>
                                 <div className='header-info-left d-flex align-items-center'>
                                     <div className='logo'>
                                         <nav><Link to='/'> <img src={logo} alt='logo' /></Link></nav>
                                     </div>
-                                    <form className='form-box'>
-                                        <input type="text" name="Search" placeholder="Search book by author or publisher" />
-                                        <div className="search-icon">
-                                            <i className="pi pi-search"></i>
-                                        </div>
-                                    </form>
                                 </div>
                                 <div className='w-2/4 ml-10'>
                                     <Display />

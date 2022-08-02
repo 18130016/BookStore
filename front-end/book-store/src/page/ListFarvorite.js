@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
+import Footer from "../component/Footer";
+import Header from "../component/Header";
 import FarvoriteService from "../service/FarvoriteService"
+import "../css/favorite.css"
 
 
 export default function ListFarvorite() {
 
+
+
     const favService = new FarvoriteService();
-    const [change,setChange]=useState(0);
+
 
     const [list, setList] = useState([]);
     const uID = parseInt(localStorage.getItem("userId"));
@@ -14,26 +19,65 @@ export default function ListFarvorite() {
         favService.getList(uID).then((data) => {
             setList(data)
         })
-    },[change])
+    }, [])
 
     function removeItem(id) {
-        setChange(id+1);
         favService.deleteFarvoriteBook(id).then((data) => {
-            console.log(data)  
+            getApi();
         })
     }
 
+    function getApi() {
+        favService.getList(uID).then((data) => {
+            setList(data)
+        })
+    }
+
+
     const showProduct = list.map((item, index) =>
-        <div key={index}>
-            <h3>{item.book.name}</h3>
-            <img style={{ height: "120px", width: "80px" }} src={item.book.image} alt="" />
-            <button onClick={() => removeItem(item.id)}>xóa</button>
+        <div key={index} className="fav-box col-md-12" >
+            <div className="row">
+                <div className="col-md-9 fav-content-1">
+                    <img src={item.book.image} alt="" />
+                    <div className="fav-content-detail">
+                        <h3>{item.book.name}</h3>
+                        <p>Giá: <span>{item.book.price}đ</span></p>
+                        <p>Tác giả: {item.book.author.join(" | ")}</p>
+                    </div>
+
+                </div>
+
+                <div className="col-md-3 fav-content-2">
+                    <div><button onClick={() => removeItem(item.id)}>xóa</button></div>
+
+                </div>
+
+            </div>
         </div>
+
     )
-  
+
+
     return (
-        <div className="container">
-            {showProduct}
+        <div>
+            <Header />
+
+            <div className="container">
+                <div className="fav-box">
+
+                    <div className="fav-header">
+                        <h1>Danh sách yêu thích</h1>
+                    </div>
+                    <div className="row">
+                        {showProduct}
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <Footer />
         </div>
     )
 }

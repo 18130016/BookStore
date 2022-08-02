@@ -10,6 +10,11 @@ import FarvoriteService from "../service/FarvoriteService";
 import { useSelector } from "react-redux";
 import { Rating } from 'primereact/rating';
 import CommentService from "../service/CommentService";
+import Header from "../component/Header";
+import Footer from "../component/Footer";
+
+
+
 
 
 export default function ProductDetail() {
@@ -51,6 +56,13 @@ export default function ProductDetail() {
         })
     }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
+
+    function getListComment(){
+        commentService.getCommentByProductId(id).then((data) => {
+            setListComment(data)
+            setCountCmt(data.length)
+        })
+    }
 
     function addCartItem(product_id) {
         const initcartItem = {
@@ -103,7 +115,7 @@ export default function ProductDetail() {
     function sendComment() {
 
         const current = new Date();
-        const time = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()} | ${current.getHours()}:${current.getMinutes()}`;
+        const time = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()} - ${current.getHours()}:${current.getMinutes()}`;
 
 
         let datasend = {
@@ -114,108 +126,124 @@ export default function ProductDetail() {
             rate: rates
         }
         if (islogin === true) {
-            //    commentService.sendComment(datasend).then((data)=>{
-            //     console.log(data)
-            //    })
-            console.log(time)
+               commentService.sendComment(datasend).then((data)=>{
+                getListComment()
+               })
+
         } else {
-            console.log("nớt")
+            toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: "Vui lòng đăng nhập và thử lại", life: 1500 });
         }
 
     }
 
     const showListComment = listComment.map((item, index) =>
-        <div key={index}>
-            <p>Rate: {item.rate}</p>
-            <p>By:{item.user.full_name} at {item.time_create}</p>
-            <p>Content: {item.content}</p>
+        <div key={index} className="cmt-box">
+            <div className="cmt-header">
+                <div className="cmt-title">
+                    <p><strong>{item.user.full_name}</strong></p>
+                    <Rating value={item.rate} cancel={false}/>
+                </div>
+                <p>{item.time_create}</p>
+            </div>
+            <p className="cmt-content">{item.content}</p>
         </div>
     )
+
+
+
+
     return (
-
-        <div className="services-area2">
-            <Toast ref={toast} />
-            <div className="container">
-                <div className="row">
-                    <div className="col-xl-12">
-                        <div className="row">
-                            <div className="single-services">
-                                <div className=" col-md 3 features-img">
-                                    <img src={product.image} alt="" />
-                                </div>
-                                <div className=" col-md-9 features-caption">
-                                    <h3>{product.name}</h3>
-                                    <p>{product.author.join(" | ")}</p>
-                                    <div className="flex items-center price">
-                                        <span>Price:</span>
-                                        <span className="pl-4">{product.price} VND</span>
+        <div>
+            <Header />
+            <div className="services-area2">
+                <Toast ref={toast} />
+                <div className="container">
+                    <div className="row">
+                        <div className="col-xl-12">
+                            <div className="row">
+                                <div className="single-services">
+                                    <div className=" col-md 3 features-img">
+                                        <img src={product.image} alt="" />
                                     </div>
-                                    <div className="review flex">
-                                        <div className="rating">
-                                            <Rating value={product.rate} readonly={true} />
+                                    <div className=" col-md-9 features-caption">
+                                        <h3>{product.name}</h3>
+                                        <p><span >Tác giả: </span>{product.author.join(" | ")}</p>
+                                        <div className="price">
+                                            <p>Price:</p><span>{product.price}đ</span>
                                         </div>
-                                        <p className="pl-2">({countCmt} Review)</p>
-                                    </div>
-                                    <div className="qty">
-                                        <button className="btn-minus px-2 border border-solid border-gray-400" onClick={() => clickMinus()} ><i className="pi pi-minus"></i></button>
-                                        <span className="font-semibold px-4 border border-solid border-gray-200">{qty}</span>
-                                        <button className="btn-plus px-2 border border-solid border-gray-400" onClick={() => clickPlus()}><i className="pi pi-plus"></i></button>
+                                        <div className="review">
+                                            <p>({countCmt} Bình luận)</p>
+                                        </div>
+                                        <div className="qty">
+                                            <button className="btn-minus" onClick={() => clickMinus()} ><i className="pi pi-minus"></i></button>
+                                            <input type="text" value={qty} onChange={(e) => setQty(e.target.value)} />
+                                            <button className="btn-plus" onClick={() => clickPlus()}><i className="pi pi-plus"></i></button>
+                                        </div>
+
+                                        <div className="add-to-cart">
+                                            <a onClick={() => addCartItem(product.id)} className="white-btn mr-10">Thêm vào giỏ hàng</a>
+                                            <a onClick={() => addFarvorite(product.id)} title="Thêm vào danh sách yêu thích" className="border-btn share-btn"><i className="pi pi-heart"></i></a>
+                                        </div>
                                     </div>
 
-                                    <div className="add-to-cart">
-                                        <a href="/" onClick={() => addCartItem(product.id)} className="white-btn mr-10">Add to Cart</a>
-                                        <a href="/" onClick={() => addFarvorite(product.id)} title="Thêm vào danh sách yêu thích" className="border-btn share-btn"><i className="pi pi-heart"></i></a>
-                                    </div>
                                 </div>
 
                             </div>
-
                         </div>
                     </div>
-                </div>
 
-                <div className="our-client section-padding best-selling">
+                    <div className="our-client section-padding best-selling">
 
-                    <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                        <div className="nav-button">
-                            <Nav variant="pills" >
-                                <Nav.Item>
-                                    <Nav.Link eventKey="first">Description</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link eventKey="second">Comment</Nav.Link>
-                                </Nav.Item>
-                            </Nav>
-                        </div>
-
-
-                        <Tab.Content>
-                            <Tab.Pane eventKey="first">
-                                <div className="w-full drop-shadow-xl min-h-[200px] bg-white p-3">
-                                    {product.descripton}
-                                </div>
-
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="second">
-                                <div className="w-full drop-shadow-xl min-h-[200px]  bg-white ">
-                                    {showListComment}
-                                </div>
-
-                                {/* <div>
-                                    <Rating value={rates} cancel={false} onChange={(e) => setRate(e.value)} />
-
-                                    <input type="text" onChange={(e) => setComment(e.target.value)} />
-                                    <button onClick={() => sendComment()}>Gửi</button>
-                                </div> */}
-                            </Tab.Pane>
-                        </Tab.Content>
+                        <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                            <div className="nav-button">
+                                <Nav variant="pills" >
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="first">Mô tả</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="second">Bình luận</Nav.Link>
+                                    </Nav.Item>
+                                </Nav>
+                            </div>
 
 
-                    </Tab.Container>
+                            <Tab.Content>
+                                <Tab.Pane eventKey="first">
+                                    <div>
+                                        {product.descripton}
+                                    </div>
+
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="second">
+                                    <div>
+                                        <div>
+                                            <h2>Các bình luận về sách</h2>
+                                        </div>
+                                        <div className="container">
+                                            {showListComment}
+                                        </div>
+
+                                        <div className="send-cmt">
+                                            <h4>Gửi bình luận</h4>
+                                            <Rating value={rates} cancel={false} onChange={(e) => setRate(e.value)} />
+                                            <div>
+                                                <input type="text" onChange={(e) => setComment(e.target.value)} />
+                                                <button className="cmt-btn" onClick={() => sendComment()}><i className="pi pi-send"></i></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </Tab.Pane>
+                            </Tab.Content>
 
 
+                        </Tab.Container>
+
+
+                    </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 

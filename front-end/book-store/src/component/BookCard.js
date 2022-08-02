@@ -21,13 +21,10 @@ export default function BookCard(prop) {
                         <p>{textAuthor}</p>
                         <div className="properties-footer d-flex justify-content-between align-items-center">
                             <div className="review">
-                                <div className="rating">
-                                    <Rating value={5} readOnly stars={5} cancel={false} />
-                                </div>
-                                <p>(<span>50</span> Review)</p>
+                                <p>(<span>{data.countCmt}</span> Bình luận)</p>
                             </div>
                             <div className="price">
-                                <span>{data.price} VND</span>
+                                <span>{data.price}đ</span>
                             </div>
                         </div>
                     </div>
