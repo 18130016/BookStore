@@ -169,20 +169,8 @@ export default function Home() {
                                     </div>
                                 )
                             })}
-                            {listBook.map((book) => {
-                                return (
-                                    <div className='w-[20%]'>
-                                        <BookCard book={book} />
-                                    </div>
-                                )
-                            })}
-                            {listBook.map((book) => {
-                                return (
-                                    <div className='w-[20%]'>
-                                        <BookCard book={book} />
-                                    </div>
-                                )
-                            })}
+                            
+                            
                         </div>
                         <div>
                             <Paginator first={first} rows={8} totalRecords={totalProduct} onPageChange={onBasicPageChange}></Paginator>

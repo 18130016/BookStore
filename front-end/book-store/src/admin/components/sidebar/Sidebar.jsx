@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./sidebar.scss";
 import { Link, useLocation } from "react-router-dom";
-import { images } from "../../constants";
 import sidebarNav from "../../configs/sidebarNav";
 import logo from '../../../img/logo.webp';
 
@@ -15,7 +14,6 @@ const Sidebar = () => {
       curPath = window.location.pathname.slice(1).split("/")[1];
     }
 
-    console.log(curPath);
     const activeItem = sidebarNav.findIndex((item) => item.section === curPath);
 
     setActiveIndex(curPath.length === 0 ? 0 : activeItem);

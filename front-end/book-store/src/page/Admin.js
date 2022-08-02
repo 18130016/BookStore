@@ -10,9 +10,6 @@ import NewProductForm from '../component/admin/newProductForm';
 
 import BookService from '../service/BookService';
 
-import dataproducts from '../asset/listbook'
-
-
 export default function AdminPage() {
 
     const [usershow, setNewUserShow] = useState(false);
@@ -44,7 +41,7 @@ export default function AdminPage() {
     const deleteProduct = (id) => {
         bookService.deleteBook(id).then(() => console.log(id));
     }
-
+    
 
     const [users, setUsers] = useState([]);
     const [products, setProducts] = useState([]);
@@ -53,7 +50,6 @@ export default function AdminPage() {
     useEffect(() => {
         setUsers(fakedata)
         getApi().then((data) => setProducts(data));
-        // BookService.getAll().then((data)=>setProducts(data))
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 
@@ -145,6 +141,7 @@ export default function AdminPage() {
                                     </div>
                                 </div>
                             </Tab.Pane>
+                            
                             <Tab.Pane eventKey="second">
                                 <div>
                                     <div>

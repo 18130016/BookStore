@@ -293,6 +293,5 @@ const chartMonthData = [
 ];
 
 export const dataMonthFiltered = chartMonthData.filter(item => { return parseInt(item.name.split(" ")[item.name.split(" ").length - 1]) <= month });
-console.log(dataMonthFiltered);
 
 

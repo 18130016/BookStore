@@ -2,31 +2,31 @@ import axiosClient from "../api/axiosClient"
 
 class BookService {
 
-    getAll = ()=>{
+    getAll = async () => {
         const url = 'http://localhost:8080/api/book'
-        return axiosClient.get(url);
+        return await axiosClient.get(url);
     }
 
-    newBook = (book)=>{
+    newBook = async (book) => {
         const url = 'http://localhost:8080/api/book'
-        return axiosClient.post(url,book);
+        return await axiosClient.post(url, book);
     }
 
-    deleteBook=(id)=>{
-        const url = 'http://localhost:8080/api/book/'+id;
-        return axiosClient.delete(url);
+    deleteBook = async (id) => {
+        const url = 'http://localhost:8080/api/book/' + id;
+        return await axiosClient.delete(url);
     }
 
-    getByPagination(filter){
+    async getByPagination(filter) {
         const url = 'http://localhost:8080/api/book/pagination';
-        return axiosClient.post(url,filter);
-    }   
-
-    getBookById= (id)=>{
-        const url = 'http://localhost:8080/api/book/'+id;
-        return axiosClient.get(url);
+        return await axiosClient.post(url, filter);
     }
-    
+
+    getBookById = async (id) => {
+        const url = 'http://localhost:8080/api/book/' + id;
+        return await axiosClient.get(url);
+    }
+
 }
 
 

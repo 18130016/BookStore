@@ -1,336 +1,161 @@
-import React, { useEffect, useState, useRef } from "react";
-import { productsColumn } from "../../constants/data";
-import { DataGrid } from "@mui/x-data-grid";
-import { Modal, Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import Modal from "react-bootstrap/Modal";
+import BookService from "../../../service/BookService";
+import NewProductForm from "../../../component/admin/newProductForm";
+import Table from "react-bootstrap/Table";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import PreviewIcon from "@mui/icons-material/Preview";
-import DeleteIcon from "@mui/icons-material/Delete";
-import BookService from '../../../service/BookService';
-
-const style = {
-  position: "relative",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "40%",
-  height: "90%",
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  outline: "none",
-  border: "none",
-  borderRadius: 4,
-};
-
-const styleForInput =
-  "px-4 outline-none bg-[#EDEDF2] w-full h-12 rounded-lg placeholder:italic placeholder:text-state-400 mt-4";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const ProductsAdmin = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [selectedDelete, setSelectedDelete] = useState({});
+
   const bookService = new BookService();
   const [data, setData] = React.useState([]);
+  const [showProductModal, setShowProductModal] = useState(false);
 
-  function getApi () {
+  function getApi() {
     return bookService.getAll();
   }
 
   useEffect(() => {
-    getApi().then(data => {
+    getApi().then((data) => {
       setData(data);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  console.log(data);
-
-  const [productImage, setProductImage] = useState();
-  const [preview, setPreview] = useState();
-  const [imgSource, setImgSource] = useState();
-
-  const fileInputRef = useRef();
-
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+  const deleteProduct = async (id) => {
+    bookService.deleteBook(id).then(() => {
+      getApi().then((data) => {
+        setData(data);
+      });
+    });
   };
 
+  const ProductItem = (props) =>
+    props.data.map((item) => (
+      <tr key={item.id}>
+        <td>{item.id}</td>
+        <td>
+          <img src={item.image} alt="" />
+        </td>
+        <td>{item.name}</td>
+        <td>{item.author.join(" | ")}</td>
+        <td>{item.typeOfBook.join(" | ")}</td>
+        <td>{item.price}</td>
+        <td>
+          <span className="pr-2 hover:text-green-600 cursor-pointer">
+            <i className="pi pi-info-circle" />
+          </span>
 
-  useEffect(() => {
-    if (productImage) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(productImage);
-    } else {
-      setPreview(null);
-    }
-  }, [productImage]);
-
-  const handleChangeProductImage = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.substr(0, 5) === "image") {
-      setProductImage(file);
-    } else {
-      setProductImage(null);
-    }
-  };
-
-  async function handleOnSubmit(event) {
-    event.preventDefault();
-    const form = event.currentTarget;
-
-    const fileInput = Array.from(form.elements).find(
-      ({ name }) => name === "file"
-    );
-
-    const formData = new FormData();
-
-    for (const file of fileInput.files) {
-      formData.append("file", file);
-    }
-
-    formData.append("upload_preset", "my-uploads");
-
-    const data = await fetch(
-      "https://api.cloudinary.com/v1_1/testingcloudinary123/image/upload",
-      {
-        method: "POST",
-        body: formData,
-      }
-    ).then((r) => r.json());
-
-    setImgSource(data.secure_url);
-  }
-
-  const [openAddProduct, setOpenAddProduct] = React.useState(false);
-  const handleOpenAddProduct = () => setOpenAddProduct(true);
-  const handleCloseProduct = () => setOpenAddProduct(false);
-
-  const [openUpdateProduct, setOpenUpdateProduct] = React.useState(false);
-  const handleCloseUpdateProduct = () => setOpenUpdateProduct(false);
-
-  const [productName, setProductName] = useState();
-  const [description, setDescription] = useState();
-  const [author, setAuthor] = useState();
-
-  const [productNameUpdate, setProductNameUpdate] = useState();
-  const [descriptionUpdate, setDescriptionUpdate] = useState();
-  const [quantityUpdate, setQuantityUpdate] = useState();
-
-  const handleUpdateProduct = (id) => {
-    const product = data.find((item) => item.id === id);
-    setProductNameUpdate(product.name);
-    setDescriptionUpdate(product.description);
-    setQuantityUpdate(product.quantity);
-    setOpenUpdateProduct(true);
-  };
-
-  const columnRow = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 300,
-      headerAlign: "center",
-      renderCell: (params) => {
-        return (
-          <div className="flex flex-row items-center ml-5">
-            <Button
-              className="w-[110px]"
-              color="success"
-              onClick={() => {
-                handleUpdateProduct(params.row.id);
-              }}
-              variant="outlined"
-              startIcon={<PreviewIcon />}
-            >
-              <span className="pt-1">Update</span>
-            </Button>
-
-            <div className="pl-5" onClick={() => handleDelete(params.row.id)}>
-              <Button
-                className="w-[110px]"
-                color="error"
-                variant="outlined"
-                startIcon={<DeleteIcon />}
-              >
-                <span className="pt-1">Delete</span>
-              </Button>
-            </div>
-          </div>
-        );
-      },
-    },
-  ];
+          <span
+            className="hover:text-red-600 cursor-pointer"
+            onClick={() => {
+              setSelectedDelete(item);
+              handleClickOpen();
+            }}
+          >
+            <i className="pi pi-trash" />
+          </span>
+        </td>
+      </tr>
+    ));
 
   return (
-    <div className="w-full h-[600px] p-5">
-      <div className="w-full mb-5">
-        <button
-          onClick={handleOpenAddProduct}
-          className="hover:bg-green-600 py-2 px-5 rounded-lg bg-green-700 drop-shadow-lg text-white font-semibold"
+    <div className="w-full h-screen">
+      {/* // Modal Update Product */}
+      <div className="w-full">
+        <Button variant="outlined" onClick={() => setShowProductModal(true)}>
+          Thêm Sản Phẩm
+        </Button>
+        <Modal
+          size="lg"
+          show={showProductModal}
+          onHide={() => setShowProductModal(false)}
+          aria-labelledby="model-new-product"
         >
-          Add New Product
-        </button>
+          <Modal.Header closeButton>
+            <Modal.Title id="model-new-product">New product</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <NewProductForm />
+          </Modal.Body>
+        </Modal>
       </div>
 
-      <DataGrid
-        rows={data}
-        columns={productsColumn.concat(columnRow)}
-        pageSize={7}
-        rowsPerPageOptions={[7]}
-      />
-
-      {/* // Modal Update Product */}
-      <Modal
-        open={openUpdateProduct}
-        onClose={handleCloseUpdateProduct}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <h1 className="font-semibold text-2xl text-center">UPDATE PRODUCT</h1>
-          <form className="mt-5" onSubmit={handleOnSubmit}>
-            <input
-              value={productNameUpdate}
-              className={`${styleForInput}`}
-              placeholder="Nhập tên sản phẩm"
-              onChange={(e) => {
-                setProductNameUpdate(e.target.value);
-              }}
-            />
-            <input
-              value={descriptionUpdate}
-              className={`${styleForInput}`}
-              placeholder="Nhập mô tả sản phẩm"
-              onChange={(e) => {
-                setDescriptionUpdate(e.target.value);
-              }}
-            />
-            <input
-              value={quantityUpdate}
-              type="number"
-              className={`${styleForInput}`}
-              placeholder="Nhập số lượng sản phẩm"
-              onChange={(e) => {
-                setQuantityUpdate(e.target.value);
-              }}
-            />
-            <Button
-              style={{ marginTop: "24px" }}
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={(event) => {
-                event.preventDefault();
-                fileInputRef.current.click();
-              }}
-            >
-              Add image
-            </Button>
-            <input
-              type="file"
-              name="file"
-              className="hidden"
-              accept="image/*"
-              ref={fileInputRef}
-              onChange={handleChangeProductImage}
-            />
-
-            <div className="w-full mt-5">
-              {preview ? (
-                <div className="hover:cursor-pointer w-[64px] h-[64px] object-fill">
-                  <img src={preview} alt="preview" />
+      <div style={{ minHeight: "650px" }} className="table-body mt-2 ">
+        <Table striped bordered hover className="h-[1000px]]">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Hình ảnh</th>
+              <th>Tên</th>
+              <th>Tác giả</th>
+              <th>Thể loại</th>
+              <th>Giá</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody className="h-[1000px]">
+            <ProductItem data={data} />
+          </tbody>
+        </Table>
+      </div>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Bạn có muốn xóa sản phẩm?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <div className="flex items-center">
+                <div className="w-20 h-20">
+                  <img
+                    style={{ objectFit: "contain" }}
+                    src={selectedDelete.image}
+                    alt=""
+                  />
                 </div>
-              ) : <div className="hover:cursor-pointer w-[64px] h-[64px] object-fill">
-              <img src={preview} alt="preview" />
-            </div>}
-            </div>
-
-            <div className="w-full absolute bottom-10 left-1/4">
-              <button
-                className="w-2/4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                type="submit"
-              >
-                <span className="font-semibold">Thêm</span>
-              </button>
-            </div>
-          </form>
-        </Box>
-      </Modal>
-
-      {/* Modal add product?= */}
-      <Modal
-        open={openAddProduct}
-        onClose={handleCloseProduct}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <h1 className="font-semibold text-2xl text-center">
-            ADD NEW PRODUCT
-          </h1>
-          <form className="mt-5" onSubmit={handleOnSubmit}>
-            <input
-              value={productName}
-              className={`${styleForInput}`}
-              placeholder="Nhập tên sản phẩm"
-              onChange={(e) => {
-                setProductName(e.target.value);
-              }}
-            />
-            <textarea
-              value={description}
-              className={`${styleForInput} h-24 pt-1`}
-              placeholder="Nhập mô tả sản phẩm"
-              onChange={(e) => {
-                setDescription(e.target.value);
-              }}
-            />
-            <input
-              value={author}
-              className={`${styleForInput}`}
-              placeholder="Nhập tên tác giả"
-              onChange={(e) => {
-                setAuthor(e.target.value);
-              }}
-            />
+                <span className="font-semibold pl-2">
+                  {selectedDelete ? selectedDelete.name : ""}
+                  {" - "}
+                  {selectedDelete ? selectedDelete.author : ""}
+                </span>
+              </div>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Không</Button>
             <Button
-              style={{ marginTop: "24px" }}
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={(event) => {
-                event.preventDefault();
-                fileInputRef.current.click();
+              onClick={() => {
+                deleteProduct(selectedDelete.id);
+                handleClose();
               }}
+              autoFocus
             >
-              Add image
+              Xóa
             </Button>
-            <input
-              type="file"
-              name="file"
-              className="hidden"
-              accept="image/*"
-              ref={fileInputRef}
-              onChange={handleChangeProductImage}
-            />
-
-            <div className="w-full mt-5">
-              {preview ? (
-                <div className="hover:cursor-pointer w-[64px] h-[64px] object-fill">
-                  <img src={preview} alt="preview" />
-                </div>
-              ) : null}
-            </div>
-
-            <div className="w-full absolute bottom-10 left-1/4">
-              <button
-                className="w-2/4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                type="submit"
-              >
-                <span className="font-semibold">Thêm</span>
-              </button>
-            </div>
-          </form>
-        </Box>
-      </Modal>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   );
 };

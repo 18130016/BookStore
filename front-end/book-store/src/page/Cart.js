@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react"
 import "../css/cart.css"
 import CartService from "../service/CartService"
 import { Toast } from 'primereact/toast';
-
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem, removeAll } from "../app/ListCartItem";
 import { Link, useNavigate } from "react-router-dom";

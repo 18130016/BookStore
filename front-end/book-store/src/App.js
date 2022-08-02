@@ -25,8 +25,10 @@ import Dashboard from './admin/pages/Dashboard';
 import Blank from './admin/pages/Blank';
 import AddressList from './page/address/address-list/AddressList';
 import Blog from './page/blog/Blog';
+import Admin from './page/Admin';
 import ProductsAdmin from './admin/components/products/ProductsAdmin';
 import { AuthContextProvider } from './Context/AuthContext';
+
 
 
 function App() {
@@ -34,7 +36,7 @@ function App() {
   return (
     <div>
       <AuthContextProvider>
-       
+        
         <Routes>
           <Route path='/' element={<Home title="Home page"></Home>} />
           <Route path='/products' element={<ProductsAdmin></ProductsAdmin>} />
@@ -46,6 +48,7 @@ function App() {
           <Route path="/cart/address-list" element={<AddressList />} />
 
           <Route path="/account" element={<MyAccount />} />
+          <Route path="/admin2" element={<Admin />} />
           <Route path="/categories" element={<ProductsCategory />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/farvorite" element={<ListFarvorite />} />
