@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ChartToday from "./ChartToday";
 import {
   widgetsData,
@@ -8,12 +8,13 @@ import {
 } from "../../constants/datachart";
 import ChartWeek from "./ChartWeek";
 import ChartMonth from "./ChartMonth";
+import OrderService from "../../../service/OrderService";
 
 const currentSelected = [];
 const listCategoryFilter = ["Theo Ngày", "Theo Tuần", "Theo Tháng"];
 function Widget(title, bgColor) {
   const [isClick, setIsClick] = useState(false);
-  
+
   const handleClickWidget = () => {
     setIsClick(!isClick);
 
@@ -44,8 +45,18 @@ function Widget(title, bgColor) {
 }
 const SalesAnalysis = () => {
   const [typeOfChart, setTypeOfChart] = useState(listCategoryFilter[0]);
+  const orderService = new OrderService();
 
-  console.log(typeOfChart);
+  useEffect(() => {
+    orderService.getAll().then((res) => {
+      console.log(res[0].list_product);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
+
+
   return (
     <div className="w-full h-full bg-white">
       <div className="w-full pt-4 pl-5">

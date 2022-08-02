@@ -2,6 +2,10 @@ import axiosClient from "../api/axiosClient"
 
 
 class OrderService {
+    getAll = async () => {
+        let url = "http://localhost:8080/api/order"
+        return await axiosClient.get(url);
+    }
 
     getOrderByUserId(id) {
         let url = "http://localhost:8080/api/order/" + id
