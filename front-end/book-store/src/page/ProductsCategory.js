@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import "../css/product.css";
-
+import Header from '../component/Header';
 import { Paginator } from 'primereact/paginator';
 
 import BookCard from "../component/BookCard";
@@ -111,6 +111,7 @@ export default function ProductsCategory() {
 
     return (
         <div className="listing-area">
+            <Header />
             <div className="container">
                 <div className="row">
                     <div className="col-lg-3">
