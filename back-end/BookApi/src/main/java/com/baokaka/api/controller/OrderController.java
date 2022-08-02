@@ -50,6 +50,11 @@ public class OrderController {
 			return new AuthResponse(false,"Đặt hàng thất bại");
 		}
 	}
+
+	@GetMapping("")
+	public List<ResponseOrder> getAllOrder(){
+		return orderService.getAllOrder();
+	}
 	
 	@PutMapping("/{id}")
 	public AuthResponse update(@PathVariable("id") int id ,@RequestBody Order addr){

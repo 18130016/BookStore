@@ -50,19 +50,25 @@ public class OrderService {
 		return list;
 	}
 
-	public List<ResponseOrder> getOrder(int id) {
-		List<ResponseOrder> result = new ArrayList<ResponseOrder>();
-		for (Order o : getAllOrderByUserId(id)) {
-			result.add(new ResponseOrder(o.getId(), o.getUser_id(), getAddressById(o.getAddress_id()),
-					convertStringToList(o.getList_products()), o.getStatus(), o.getCreate_day()));
+	public List<ResponseOrder> getAllOrder() {
+		List<ResponseOrder> list = new ArrayList<>();
+		for (Order od : orderRepository.findAll()) {
+			list.add(new ResponseOrder(od.getId(), od.getUser_id(), getAddressById(od.getAddress_id()),
+					convertStringToList(od.getList_products()), od.getStatus(), od.getCreate_day()));
 		}
-
-		return result;
-
+		return list;
 	}
 
 	public Address getAddressById(int id) {
 		return addressRepository.findById(id).get();
 	}
 
+	public List<ResponseOrder> getOrder(int id) {
+		List<ResponseOrder> result = new ArrayList<ResponseOrder>();
+		for (Order o : getAllOrderByUserId(id)) {
+			result.add(new ResponseOrder(o.getId(), o.getUser_id(), getAddressById(o.getAddress_id()),
+					convertStringToList(o.getList_products()), o.getStatus(), o.getCreate_day()));
+		}
+		return result;
+	}
 }
