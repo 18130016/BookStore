@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +24,7 @@ import com.baokaka.api.repository.AddressRepository;
 public class AddressController {
 	@Autowired
 	public AddressRepository addressRepository;
-	
+
 	@GetMapping("/{id}")
 	public List<Address> getAddressByUserID(@PathVariable("id") int id){
 		List<Address> list = new ArrayList<Address>();
@@ -37,7 +35,7 @@ public class AddressController {
 		}
 		return list;
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public AuthResponse delete(@PathVariable("id") int id) {
 		try {
@@ -47,7 +45,7 @@ public class AddressController {
 			return new AuthResponse(false, "Xóa địa chỉ thất bại");
 		}
 	}
-	
+
 	@PostMapping("")
 	public AuthResponse addAddress(@RequestBody Address ad) {
 		try {
@@ -55,11 +53,11 @@ public class AddressController {
 			return new AuthResponse(true, "Thêm địa chỉ thành công");
 		} catch (Exception e) {
 			return new AuthResponse(false, "Thêm địa chỉ thất bại");
-					
+
 		}
-		
+
 	}
-	
+
 	@PutMapping("/{id}")
 	public AuthResponse update(@PathVariable("id") int id ,@RequestBody Address addr){
 		try {

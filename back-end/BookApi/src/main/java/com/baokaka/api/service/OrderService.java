@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.baokaka.api.payloads.BookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baokaka.api.common.OrderItem;
+import com.baokaka.api.model.Address;
 import com.baokaka.api.model.Order;
-import com.baokaka.api.payloads.BookResponse;
 import com.baokaka.api.payloads.ResponseOrder;
+import com.baokaka.api.repository.AddressRepository;
 import com.baokaka.api.repository.BookRepository;
 import com.baokaka.api.repository.OrderRepository;
 
@@ -22,6 +24,9 @@ public class OrderService {
 
 	@Autowired
 	private BookRepository bookRepository;
+
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public List<OrderItem> convertStringToList(String list) {
 		List<OrderItem> result = new ArrayList<OrderItem>();
@@ -48,12 +53,16 @@ public class OrderService {
 	public List<ResponseOrder> getOrder(int id) {
 		List<ResponseOrder> result = new ArrayList<ResponseOrder>();
 		for (Order o : getAllOrderByUserId(id)) {
-			result.add(new ResponseOrder(o.getId(), o.getUser_id(), o.getAddress_id(),
+			result.add(new ResponseOrder(o.getId(), o.getUser_id(), getAddressById(o.getAddress_id()),
 					convertStringToList(o.getList_products()), o.getStatus(), o.getCreate_day()));
 		}
 
 		return result;
 
+	}
+
+	public Address getAddressById(int id) {
+		return addressRepository.findById(id).get();
 	}
 
 }

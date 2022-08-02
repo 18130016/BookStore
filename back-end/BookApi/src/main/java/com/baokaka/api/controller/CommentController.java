@@ -33,8 +33,7 @@ public class CommentController {
 	@GetMapping("/{id}")
 	public List<ResponseCmt> getAllCmtByBookId(@PathVariable("id") int id){
 		List<ResponseCmt> list = new ArrayList<ResponseCmt>();
-		
-		
+
 		for (Comment comment : cmtRepository.findAll()) {
 			if(comment.getBook_id()==id) {
 				

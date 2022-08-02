@@ -44,7 +44,7 @@ public class OrderController {
 	public AuthResponse addOrder(@RequestBody Order oder) {
 		try {
 			orderRepository.save(oder);
-			return new AuthResponse(false,"Đặt hàng thành công");
+			return new AuthResponse(true,"Đặt hàng thành công");
 			
 		} catch (Exception e) {
 			return new AuthResponse(false,"Đặt hàng thất bại");
