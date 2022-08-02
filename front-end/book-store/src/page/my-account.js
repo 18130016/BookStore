@@ -2,14 +2,13 @@ import { useEffect, useState } from "react"
 import UserService from "../service/UserService";
 import jwt_decode from "jwt-decode";
 import AddressService from "../service/AddressService";
-import Modal from 'react-bootstrap/Modal';
 import OrderService from "../service/OrderService";
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import Form from 'react-bootstrap/Form';
 import Header from "../component/Header";
 import Footer from "../component/Footer";
-import '../css/my-account.css'
+import '../css/my-account.css';
+import CreateAddress from "../page/address/address-create/CreateAddress";
 
 
 export default function MyAccount() {
@@ -31,29 +30,11 @@ export default function MyAccount() {
         userName: ""
     }
 
-    const initAddress = {
-        name: "",
-        user_id: userID,
-        phoneNumber: "",
-        province: "",
-        district: "",
-        wards: "",
-        detail: ""
-    }
-
-
 
     const [user, setUser] = useState(initUser);
     const [listAddress, setListAddress] = useState([])
-    const [address, setAddress] = useState(initAddress)
     const [listOrder, setListOrder] = useState([])
     const [showNewAddress, setShowNewAddress] = useState(false);
-
-
-
-
-
-
 
     useEffect(() => {
         userservice.getUserByUserName(username).then((data) => {
@@ -74,13 +55,6 @@ export default function MyAccount() {
     }
 
 
-    function createAddress() {
-        addressService.addAddress(address).then((data) => {
-            getAddressApi()
-        })
-        setShowNewAddress(false)
-    }
-
     function deleteAddress(id) {
         addressService.deleteAddress(parseInt(id)).then((data) => {
             getAddressApi()
@@ -91,19 +65,19 @@ export default function MyAccount() {
     const [statusOrder, setStatusOrder] = useState("all");
 
 
-    function choseShowListOrder(status){
-       let t = [];
-       for (const iterator of listOrder) {
-            if(iterator.status === status){
+    function choseShowListOrder(status) {
+        let t = [];
+        for (const iterator of listOrder) {
+            if (iterator.status === status) {
                 t.push(iterator);
             }
-       }
+        }
 
-       if(status === "all"){
-        return listOrder;
-       }
+        if (status === "all") {
+            return listOrder;
+        }
 
-       return t;
+        return t;
     }
 
 
@@ -227,22 +201,22 @@ export default function MyAccount() {
 
                                             <Nav variant="pills" defaultActiveKey="event-1">
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="event-1" onClick={()=>setStatusOrder("alls")}>Tất cả</Nav.Link>
+                                                    <Nav.Link eventKey="event-1" onClick={() => setStatusOrder("alls")}>Tất cả</Nav.Link>
                                                 </Nav.Item>
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="event-2" onClick={()=>setStatusOrder("Chờ xác nhận")}>Chờ xác nhận</Nav.Link>
+                                                    <Nav.Link eventKey="event-2" onClick={() => setStatusOrder("Chờ xác nhận")}>Chờ xác nhận</Nav.Link>
                                                 </Nav.Item>
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="event-3"  onClick={()=>setStatusOrder("Đã xác nhận")}>Đã xác nhận</Nav.Link>
+                                                    <Nav.Link eventKey="event-3" onClick={() => setStatusOrder("Đã xác nhận")}>Đã xác nhận</Nav.Link>
                                                 </Nav.Item>
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="event-4"  onClick={()=>setStatusOrder("Đang giao")}>Đang giao</Nav.Link>
+                                                    <Nav.Link eventKey="event-4" onClick={() => setStatusOrder("Đang giao")}>Đang giao</Nav.Link>
                                                 </Nav.Item>
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="event-5"  onClick={()=>setStatusOrder("Đã giao")}>Đã giao</Nav.Link>
+                                                    <Nav.Link eventKey="event-5" onClick={() => setStatusOrder("Đã giao")}>Đã giao</Nav.Link>
                                                 </Nav.Item>
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="event-6"  onClick={()=>setStatusOrder("Đã hủy")}>Đã hủy</Nav.Link>
+                                                    <Nav.Link eventKey="event-6" onClick={() => setStatusOrder("Đã hủy")}>Đã hủy</Nav.Link>
                                                 </Nav.Item>
                                             </Nav>
                                         </div>
@@ -271,67 +245,7 @@ export default function MyAccount() {
                                                 {showListAddress}
                                             </div>
                                         </div>
-                                        <Modal
-                                            size="md"
-                                            show={showNewAddress}
-                                            onHide={() => setShowNewAddress(false)}
-                                            aria-labelledby="model-new-address"
-                                        >
-                                            <Modal.Header closeButton>
-                                                <Modal.Title id="model-new-address">
-                                                    Thêm địa chỉ
-                                                </Modal.Title>
-                                            </Modal.Header>
-                                            <Modal.Body>
-                                                <Form>
-                                                    <div className="row">
-                                                        <div className="col-md-6">
-                                                            <Form.Group controlId='name' className='mb-3'>
-                                                                <Form.Label>Tên người nhận</Form.Label>
-                                                                <Form.Control type="text" size="sm" name="name" onChange={(e) => setAddress({ ...address, name: e.target.value })} />
-                                                            </Form.Group>
-                                                        </div>
-
-                                                        <div className="col-md-6">
-                                                            <Form.Group controlId='name' className='mb-3'>
-                                                                <Form.Label>Số điện thoại</Form.Label>
-                                                                <Form.Control type="text" size="sm" name="sdt" onChange={(e) => setAddress({ ...address, phoneNumber: e.target.value })} />
-                                                            </Form.Group>
-                                                        </div>
-
-                                                        <div className="col-md-12">
-                                                            <Form.Group controlId='name' className='mb-3'>
-                                                                <Form.Label>Tỉnh/Thành phố</Form.Label>
-                                                                <Form.Control type="text" size="sm" onChange={(e) => setAddress({ ...address, province: e.target.value })} />
-                                                            </Form.Group>
-                                                        </div>
-
-                                                        <div className="col-md-6">
-                                                            <Form.Group controlId='name' className='mb-3'>
-                                                                <Form.Label>Quận/Huyện</Form.Label>
-                                                                <Form.Control type="text" size="sm" onChange={(e) => setAddress({ ...address, district: e.target.value })} />
-                                                            </Form.Group>
-                                                        </div>
-                                                        <div className="col-md-6">
-                                                            <Form.Group controlId='name' className='mb-3'>
-                                                                <Form.Label>Phường/Xã</Form.Label>
-                                                                <Form.Control type="text" size="sm" onChange={(e) => setAddress({ ...address, wards: e.target.value })} />
-                                                            </Form.Group>
-                                                        </div>
-                                                        <div className="col-md-12">
-                                                            <Form.Group controlId='name' className='mb-3'>
-                                                                <Form.Label>Địa chỉ chi tiết</Form.Label>
-                                                                <Form.Control type="textarea" size="sm" onChange={(e) => setAddress({ ...address, detail: e.target.value })} />
-                                                            </Form.Group>
-                                                        </div>
-                                                        <div className="btn-new-address col-md-12">
-                                                            <button onClick={() => createAddress()}>Thêm</button>
-                                                        </div>
-                                                    </div>
-                                                </Form>
-
-                                            </Modal.Body>
-                                        </Modal>
+                                        <CreateAddress getAddressApi = {getAddressApi} openCreateAddress={showNewAddress} handleCloseCreateAddress={() => setShowNewAddress(false)} />
                                     </div>
                                 </Tab.Pane>
                             </Tab.Content>

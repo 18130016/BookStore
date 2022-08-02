@@ -79,16 +79,44 @@ export default function Header() {
                 )
             } else
                 return (
-                    <nav>
-                        <ul>
-                            <li><Link to="/farvorite" className='favorite'><i className='pi pi-heart'></i></Link></li>
-                            <li>
-                                <Link to='/cart'> <Avatar className="p-overlay-badge" icon="pi pi-shopping-cart" size="large" shape="circle"> </Avatar></Link>
-                            </li>
-                            <li><Link to="/account" className=""><i className='pi pi-user'></i> {user}</Link></li>
-                            <li ><a onClick={() => clicklogOut()} className=""><i className='pi pi-sign-out'></i> </a></li>
-                        </ul>
-                    </nav>
+
+                    <div className='flex items-center w-full relative'>
+                        <div>
+                            <Popper id={id} open={open} anchorEl={anchorEl}>
+                                <Box sx={{ p: 1, bgcolor: 'background.paper', marginTop: 1, borderRadius: "8px" }}>
+                                    <div className='w-44 pl-2'>
+                                        <Link className='inline-block p-2 hover:text-[#ff1616]' to= "/account">Tài khoản của tôi</Link>
+                                        <Link className='inline-block p-2 hover:text-[#ff1616]' to = "/">Đơn hàng của tôi</Link>
+                                        <p onClick={() => clicklogOut()} className='p-2 cursor-pointer hover:text-[#ff1616]'>Thoát tài khoản</p>
+                                    </div>
+                                </Box>
+                            </Popper>
+                        </div>
+                        <div className='flex items-center justify-around w-2/5'>
+                            <Link className='hover:text-[#ff1616] rounded-xl bg-white px-3 drop-shadow-lg pt-2 pb-2 flex items-center justify-center' to="/farvorite"><i className='pi pi-heart' style={styleIcon}></i></Link>
+
+                            <Link className='hover:text-[#ff1616] rounded-xl bg-white px-3 drop-shadow-lg pt-2 pb-2 flex items-center justify-center' to='/cart'> <i className="pi pi-shopping-cart" style={styleIcon}> </i></Link>
+
+                            <button
+                                onClick={handleClick}
+                                className='hover:text-[#ff1616] rounded-xl bg-white px-3 drop-shadow-lg pt-2 pb-2 flex items-center justify-center'>
+                                <i className='pi pi-user' style={styleIcon}></i>
+                            </button>
+
+                        </div>
+
+                       
+                    </div>
+                    // <nav>
+                    //     <ul>
+                    //         <li><Link to="/farvorite" className='favorite'><i className='pi pi-heart'></i></Link></li>
+                    //         <li>
+                    //             <Link to='/cart'> <Avatar className="p-overlay-badge" icon="pi pi-shopping-cart" size="large" shape="circle"> </Avatar></Link>
+                    //         </li>
+                    //         <li><Link to="/account" className=""><i className='pi pi-user'></i> {user}</Link></li>
+                    //         <li ><a onClick={() => clicklogOut()} className=""><i className='pi pi-sign-out'></i> </a></li>
+                    //     </ul>
+                    // </nav>
                 )
 
         }

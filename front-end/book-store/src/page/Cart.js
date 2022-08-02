@@ -4,8 +4,9 @@ import CartService from "../service/CartService"
 import { Toast } from 'primereact/toast';
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem, removeAll } from "../app/ListCartItem";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../component/Header";
+import Footer from "../component/Footer";
 
 export default function Cart() {
     let uID = localStorage.getItem("userId")
@@ -16,7 +17,6 @@ export default function Cart() {
 
     const data = useSelector(state => state.listCartItem.list)
 
-
     const [cartItem, setCartItem] = useState([])
 
     useEffect(() => {
@@ -26,10 +26,18 @@ export default function Cart() {
         })
     }, [])
 
+    function getApi(){
+        cartService.getCartByIdUser(uID).then((data) => {
+            setCartItem(data)
+            dispath(removeAll())
+        })
+    }
+
     function removeItemOfCart(id) {
         cartService.removeItem(id).then((data) => {
             if (data.check === true) {
                 toast.current.show({ severity: 'success', summary: 'Thành công!', detail: data.acessToken, life: 1000 });
+                getApi();
             } else {
                 toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: data.acessToken, life: 1000 });
             }
@@ -37,6 +45,7 @@ export default function Cart() {
     }
 
     function minusValue(item) {
+       
 
         if (item.qty === 1) {
             return toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: "Số lượng đã tối thiểu", life: 1000 });
@@ -51,16 +60,21 @@ export default function Cart() {
         cartService.updateCartItem(cartItem).then((data) => {
             if (data.check === true) {
                 toast.current.show({ severity: 'success', summary: 'Thành công!', detail: data.acessToken, life: 1000 });
+                getApi();
             } else {
                 toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: data.acessToken, life: 1000 });
             }
         })
 
+        
+       
+
+
     }
 
     //tăng so lượng
     function plusValue(item) {
-
+        
         let cartItem = {
             id: item.id,
             book_id: item.book.id,
@@ -70,11 +84,11 @@ export default function Cart() {
         cartService.updateCartItem(cartItem).then((data) => {
             if (data.check === true) {
                 toast.current.show({ severity: 'success', summary: 'Thành công!', detail: data.acessToken, life: 1000 });
+                getApi();
             } else {
                 toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: data.acessToken, life: 1000 });
             }
         })
-
     }
 
     //chọn thì thêm vào redux bỏ chọn thì xóa khỏi redux
@@ -92,9 +106,18 @@ export default function Cart() {
         } else {
             navigate("/checkout", { replace: true });
         }
+    }
 
+    function totalPrice(){
+        let total = 0;
 
-
+        if(data.length <=0){
+            return 0;
+        }
+        for (const item of data) {
+            total += item.book.price * item.qty;
+        }
+        return total +30000;
     }
 
 
@@ -106,7 +129,7 @@ export default function Cart() {
             <td><input type="checkbox" onChange={(e) => cartItemSelect(e.target.checked, item)} /></td>
             <td>
                 <div className="img">
-                    <a href="/"><img src={item.book.image} alt="Image" /></a>
+                    <a href=""><img src={item.book.image} alt="Image" /></a>
                     <p>{item.book.name}</p>
                 </div>
             </td>
@@ -126,61 +149,52 @@ export default function Cart() {
     )
 
     return (
-        <div className="cart-page">
-            <Toast ref={toast} />
+        <div>
             <Header />
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-lg-8">
-                        <div className="cart-page-inner">
-                            <div className="table-responsive">
-                                <table className="table table-bordered">
-                                    <thead className="thead-dark">
-                                        <tr>
-                                            <th>Chọn</th>
-                                            <th>Sản phẩm</th>
-                                            <th>Giá</th>
-                                            <th>Số lượng</th>
-                                            <th>Tổng giá</th>
-                                            <th>Xóa</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="align-middle">
-                                        {showCartItem}
-                                    </tbody></table>
+            <div className="cart-page">
+                <Toast ref={toast} />
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-lg-8">
+                            <div className="cart-page-inner">
+                                <div className="table-responsive">
+                                    <table className="table table-bordered">
+                                        <thead className="thead-dark">
+                                            <tr>
+                                                <th>Chọn</th>
+                                                <th>Sản phẩm</th>
+                                                <th>Giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Tổng giá</th>
+                                                <th>Xóa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="align-middle">
+                                            {showCartItem}
+                                        </tbody></table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-lg-4">
-                        <div className="cart-page-inner">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="w-full bg-white drop-shadow-2xl pb-3">
-                                        <div className="w-[90%] m-auto flex items-center relative">
-                                            <span className="text-xl pt-2">Giao tới</span>
-                                            <Link to="/cart/address-list" className="font-semibold text-xl pt-2 cursor-pointer absolute right-5 text-[#ff1616] hover:opacity-50" >
-                                                <span>Thay đổi</span>
-                                            </Link>
-                                        </div>
-                                        <div className="w-[90%] m-auto flex items-center relative">
-                                            <span className="font-semibold text-xl pt-2">Đặng Văn Kiệt</span>
-                                            <span className="font-semibold text-xl pt-2 pl-4"> 0397919744</span>
-                                        </div>
-                                        <div className="w-[90%] m-auto mt-2">
-                                            <p className="font-medium text-[#666] w-[80%]">114/15/44 Phạm văn chiêu, Phường 09, Quận Gò Vấp, Hồ Chí Minh</p>
+                        <div className="col-lg-4">
+                            <div className="cart-page-inner">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="coupon">
+                                            <input type="text" placeholder="Coupon Code" />
+                                            <button>Mã giảm giá</button>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-md-12 mt-4">
-                                    <div className="cart-summary">
-                                        <div className="cart-content">
-                                            <h1>Cart Summary</h1>
-                                            <p>Sub Total<span>$99</span></p>
-                                            <p>Shipping Cost<span>$1</span></p>
-                                            <h2>Grand Total<span>$100</span></h2>
-                                        </div>
-                                        <div className="cart-btn">
-                                            <button onClick={() => checkOut()}>Checkout</button>
+                                    <div className="col-md-12">
+                                        <div className="cart-summary">
+                                            <div className="cart-content">
+                                                <h1>Tổng đơn hàng</h1>
+                                                <p>Tổng giá sản phẩn<span>{totalPrice()}đ</span></p>
+                                                <p>Phí giao hàng<span>30.000đ</span></p>
+                                                <h2>Thành tiền<span>{totalPrice()}đ</span></h2>
+                                            </div>
+                                            <div className="cart-btn">
+                                                <button onClick={() => checkOut()}>Thanh toán</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -189,6 +203,7 @@ export default function Cart() {
                     </div>
                 </div>
             </div>
+            <Footer></Footer>
         </div>
     )
 }

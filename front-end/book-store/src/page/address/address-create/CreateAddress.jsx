@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Modal, Box, Switch } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -6,8 +6,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { FilledInput } from "@mui/material";
 import axios from "axios";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import AddressService from "../../../service/AddressService";
+import { Toast } from "primereact/toast";
 
 const style = {
   position: "absolute",
@@ -28,14 +29,16 @@ const styleForInput =
   "px-4 outline-none bg-[#EDEDF2] w-[70%] h-12 rounded-lg placeholder:italic placeholder:text-state-400";
 
 const CreateAddress = (props) => {
-  const [province, setProvince] = React.useState();
+  const toast = useRef(null);
   const [provinces, setProvinces] = React.useState([]);
 
   const [districts, setDistricts] = React.useState([]);
-  const [district, setDistrict] = React.useState();
 
   const [wards, setWards] = React.useState([]);
-  const [ward, setWard] = React.useState();
+
+  const [province, setProvince] = React.useState("");
+  const [district, setDistrict] = React.useState("");
+  const [ward, setWard] = React.useState("");
 
   React.useEffect(() => {
     const callAPIProvinces = async (api) => {
@@ -64,38 +67,48 @@ const CreateAddress = (props) => {
 
   const handleChangeProvince = (event) => {
     setProvince(event.target.value);
+    setAddress({ ...address, province: event.target.value.name });
     getDistrictsAPI(event.target.value.code);
   };
 
   const handelChangeDistrict = (event) => {
     setDistrict(event.target.value);
+    setAddress({ ...address, district: event.target.value.name });
     getWardsAPI(event.target.value.code);
   };
 
   const handelChangeWards = (event) => {
     setWard(event.target.value);
+    setAddress({ ...address, wards: event.target.value.name });
   };
 
-  const [name, setName] = React.useState("");
-  const [phone, setPhone] = React.useState("");
-  const [description, setDesription] = React.useState("");
-  const [isDefaultAddress, setIsDefaultAddress] = React.useState(false);
+  const addressService = new AddressService();
 
-  console.log(isDefaultAddress);
+  var userID = parseInt(localStorage.getItem("userId"));
 
-  const formData = new FormData();
-
-  const handleCreateAddress = () => {
-    formData.append("name", name);
-    formData.append("phone", phone);
-    formData.append("province", province.name);
-    formData.append("district", district.name);
-    formData.append("ward", ward.name);
-    formData.append("description", description);
-    formData.append("isDefaultAddress", isDefaultAddress);
-
-    console.log(formData.forEach((value, key) => console.log(key, value)));
+  const initAddress = {
+    name: "",
+    user_id: userID,
+    phoneNumber: "",
+    province: "",
+    district: "",
+    wards: "",
+    detail: "",
   };
+
+  const [address, setAddress] = React.useState(initAddress);
+
+  function createAddress() {
+    addressService.addAddress(address).then((data) => {
+      toast.current.show({
+        severity: "success",
+        summary: "Thêm Thành công!",
+        life: 1000,
+      });
+
+      props.getAddressApi();
+    });
+  }
 
   return (
     <Modal
@@ -105,17 +118,23 @@ const CreateAddress = (props) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
+        <div className="absolute right-0 top-0">
+          <Toast ref={toast} />
+        </div>
         <div className="w-full relative flex items-center justify-center">
           <h3 className="text-center font-semibold text-2xl">THÊM ĐỊA CHỈ</h3>
-          <span onClick={props.handleCloseCreateAddress} className="cursor-pointer absolute right-[-15px] top-[-15px]">
+          <span
+            onClick={props.handleCloseCreateAddress}
+            className="cursor-pointer absolute right-[-15px] top-[-15px]"
+          >
             <HighlightOffIcon fontSize="large" />
           </span>
         </div>
         <div className="w-full flex flex-row items-center justify-center mt-5">
           <span className="w-[25%] font-semibold text-lg">Tên người nhận</span>
           <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={address.name}
+            onChange={(e) => setAddress({ ...address, name: e.target.value })}
             className={styleForInput}
             placeholder="Tên người nhận"
           />
@@ -124,8 +143,10 @@ const CreateAddress = (props) => {
         <div className="w-full flex flex-row items-center justify-center mt-3">
           <span className="font-semibold text-lg w-[25%]">Số điện thoại</span>
           <input
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            value={address.phoneNumber}
+            onChange={(e) =>
+              setAddress({ ...address, phoneNumber: e.target.value })
+            }
             className={styleForInput}
             placeholder="Số điện thoại"
           />
@@ -230,30 +251,13 @@ const CreateAddress = (props) => {
         <div className="w-full flex flex-row items-center justify-center mt-3">
           <span className="w-[25%] font-semibold text-lg">Mô tả địa chỉ</span>
           <textarea
-            value={description}
-            onChange={(e) => setDesription(e.target.value)}
+            value={address.detail}
+            onChange={(e) => setAddress({ ...address, detail: e.target.value })}
             className="w-[70%] h-20 bg-[#EDEDF2] outline-none rounded-lg"
           />
         </div>
-
-        <div className="w-full flex flex-row items-center justify-center mt-3">
-          <span className="w-[25%] font-semibold text-lg">
-            Địa chỉ mặc định
-          </span>
-          <span className="font-semibold text-gray-500 w-[70%]">
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={isDefaultAddress}
-                  onChange={() => setIsDefaultAddress(!isDefaultAddress)}
-                />
-              }
-            />
-          </span>
-        </div>
-
         <div
-          onClick={handleCreateAddress}
+          onClick={createAddress}
           className="cursor-pointer hover:opacity-50 m-auto w-[50%] h-14 mt-5 bg-[#ff1616] rounded-lg flex items-center justify-center"
         >
           <span className="font-semibold text-white">THÊM ĐỊA CHỈ</span>

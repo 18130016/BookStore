@@ -14,9 +14,6 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 
 
-
-
-
 export default function ProductDetail() {
 
     let { id } = useParams();
@@ -63,6 +60,8 @@ export default function ProductDetail() {
             setCountCmt(data.length)
         })
     }
+
+    console.log(listComment)
 
     function addCartItem(product_id) {
         const initcartItem = {
@@ -136,7 +135,7 @@ export default function ProductDetail() {
 
     }
 
-    const showListComment = listComment.map((item, index) =>
+    const showListComment = listComment ?  listComment.map((item, index) =>
         <div key={index} className="cmt-box">
             <div className="cmt-header">
                 <div className="cmt-title">
@@ -147,10 +146,7 @@ export default function ProductDetail() {
             </div>
             <p className="cmt-content">{item.content}</p>
         </div>
-    )
-
-
-
+    ) : null;
 
     return (
         <div>

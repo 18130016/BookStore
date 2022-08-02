@@ -1,6 +1,3 @@
-/**********************************/
-/************ Cart CSS ************/
-/**********************************/
 .cart-page {
     position: relative;
     margin-top: 30px;
@@ -53,7 +50,7 @@
 .cart-page .table .img p {
     display: inline-block;
     text-align: left;
-    margin: 0;
+    margin: 0px;
 }
 
 .cart-page .table .qty {
@@ -61,6 +58,7 @@
     font-size: 20;
     display: flex;
     justify-content: center;
+    margin: auto;
 }
 
 .cart-page .table .qty p{
