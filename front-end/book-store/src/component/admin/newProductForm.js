@@ -4,7 +4,7 @@ import BookService from '../../service/BookService';
 import { Toast } from 'primereact/toast';
 
 
-export default function NewProductForm() {
+export default function NewProductForm(props) {
 
     const bookService = new BookService();
 
@@ -122,7 +122,11 @@ export default function NewProductForm() {
 
             postApi(formdata).then(() => {
                 toast.current.show({ severity: 'success', summary: 'Thêm Thành công!', detail: book.name, life: 1000 });
-            });
+            }).then(() => {
+                props.getApi().then((data) => {
+                    props.setData(data);
+                  });
+            })
         }
     }
 

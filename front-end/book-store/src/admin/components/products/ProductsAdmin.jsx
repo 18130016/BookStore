@@ -12,11 +12,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 const ProductsAdmin = () => {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -91,13 +89,13 @@ const ProductsAdmin = () => {
             <Modal.Title id="model-new-product">New product</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <NewProductForm />
+            <NewProductForm getApi={getApi} setData={setData} />
           </Modal.Body>
         </Modal>
       </div>
 
-      <div style={{ minHeight: "650px" }} className="table-body mt-2 ">
-        <Table striped bordered hover className="h-[1000px]]">
+      <div className="table-body mt-2">
+        <Table striped bordered hover className="h-[1000px]">
           <thead>
             <tr>
               <th>Id</th>
