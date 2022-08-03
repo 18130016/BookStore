@@ -126,6 +126,7 @@ export default function ProductDetail() {
         }
         if (islogin === true) {
                commentService.sendComment(datasend).then((data)=>{
+                toast.current.show({ severity: 'success', summary: 'Thành công!', detail: "Đã gửi bình luận", life: 1000 });
                 getListComment()
                })
 

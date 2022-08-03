@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Footer from "../component/Footer";
 import Header from "../component/Header";
 import FarvoriteService from "../service/FarvoriteService"
 import "../css/favorite.css"
+import { Toast } from 'primereact/toast';
+
 
 
 export default function ListFarvorite() {
-
-
-
     const favService = new FarvoriteService();
-
-
     const [list, setList] = useState([]);
+    const toast =useRef(null)
+
     const uID = parseInt(localStorage.getItem("userId"));
 
     useEffect(() => {
@@ -23,6 +22,7 @@ export default function ListFarvorite() {
 
     function removeItem(id) {
         favService.deleteFarvoriteBook(id).then((data) => {
+            toast.current.show({ severity: 'success', summary: 'Thành công!', detail: "Đã xóa", life: 1000 });
             getApi();
         })
     }
@@ -49,10 +49,10 @@ export default function ListFarvorite() {
 
                 <div className="col-md-3 fav-content-2">
                     <div><button onClick={() => removeItem(item.id)}>xóa</button></div>
-
                 </div>
 
             </div>
+
         </div>
 
     )
@@ -61,20 +61,16 @@ export default function ListFarvorite() {
     return (
         <div>
             <Header />
-
+            <Toast ref={toast} />
             <div className="container">
-                <div className="fav-box">
-
+                <div>
                     <div className="fav-header">
                         <h1>Danh sách yêu thích</h1>
                     </div>
                     <div className="row">
                         {showProduct}
                     </div>
-
-
                 </div>
-
             </div>
 
             <Footer />

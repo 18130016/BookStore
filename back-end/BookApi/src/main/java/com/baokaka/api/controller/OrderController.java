@@ -51,7 +51,7 @@ public class OrderController {
 		}
 	}
 
-	@GetMapping("")
+	@GetMapping(" ")
 	public List<ResponseOrder> getAllOrder(){
 		return orderService.getAllOrder();
 	}
@@ -71,7 +71,7 @@ public class OrderController {
 	public AuthResponse deleteById(@PathVariable("id") int id) {
 		try {
 			orderRepository.deleteById(id);
-			return new AuthResponse(false,"Xóa đơn hàng thành công");
+			return new AuthResponse(true,"Xóa đơn hàng thành công");
 			
 		} catch (Exception e) {
 			return new AuthResponse(false,"Xóa đơn hàng thất bại");

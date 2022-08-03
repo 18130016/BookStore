@@ -25,31 +25,31 @@ export default function ProductsCategory() {
 
     const author = [
         {
-            display: "Loại 1",
-            author: "bao-kaka"
+            display: "Nguyễn Nhật Ánh",
+            author: "Nguyễn Nhật Ánh"
         },
         {
-            display: "Loại 2",
-            author: "nomal"
+            display: "Lư Tư Hạo",
+            author: "Lư Tư Hạo"
         },
         {
-            display: "Loại 3",
-            author: "Special"
+            display: "Tiêu Đỉnh",
+            author: "Tiêu Đỉnh"
         }
     ]
 
     const category = [
         {
-            display: "Kinh dị",
-            type: "Kinh dị"
+            display: "Văn Học",
+            type: "Văn Học"
         },
         {
-            display: "Tiểu thuyết",
-            type: "Tiểu thuyết"
+            display: "Tản văn",
+            type: "Tản văn"
         },
         {
-            display: "Văn học",
-            type: "Văn học"
+            display: "Truyện Dài",
+            type: "Truyện Dài"
         }
     ]
 
@@ -119,7 +119,7 @@ export default function ProductsCategory() {
                             <div className="single-listing">
                                 <div className="select-Categories pb-30">
                                     <div className="small-tittle mb-20">
-                                        <h4>Filter by Genres</h4>
+                                        <h4>Lọc theo thể loại</h4>
                                     </div>
                                     {category.map((item, index) =>
                                         <div key={index}>
@@ -132,7 +132,7 @@ export default function ProductsCategory() {
                                     )}
 
                                     <div className="small-tittle mb-20">
-                                        <h4>Filter by Author</h4>
+                                        <h4>Lọc theo tác giả</h4>
                                     </div>
                                     {author.map((item, index) =>
                                         <div key={index}>

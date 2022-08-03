@@ -30,11 +30,12 @@ export default function MyAccount() {
         userName: ""
     }
 
-
     const [user, setUser] = useState(initUser);
     const [listAddress, setListAddress] = useState([])
     const [listOrder, setListOrder] = useState([])
     const [showNewAddress, setShowNewAddress] = useState(false);
+    const [statusOrder, setStatusOrder] = useState("all");
+
 
     useEffect(() => {
         userservice.getUserByUserName(username).then((data) => {
@@ -42,6 +43,7 @@ export default function MyAccount() {
         })
         orderService.getOrderByUserId(userID).then((data) => {
             setListOrder(data)
+            console.log(listOrder);
         })
         addressService.getAddressByUserId(userID).then((data) => {
             setListAddress(data)
@@ -62,19 +64,15 @@ export default function MyAccount() {
 
     }
 
-    const [statusOrder, setStatusOrder] = useState("all");
-
-
     function choseShowListOrder(status) {
-        let t = [];
-        for (const iterator of listOrder) {
-            if (iterator.status === status) {
-                t.push(iterator);
-            }
-        }
-
         if (status === "all") {
             return listOrder;
+        }
+        let t = [];
+        for (const item of listOrder) {
+            if (item.status === status) {
+                t.push(item);
+            }
         }
 
         return t;
@@ -94,7 +92,6 @@ export default function MyAccount() {
             <p>{item.detail}</p>
             <p>Xã {item.wards}, Huyện {item.district}, {item.province}</p>
         </div>
-
     )
 
     function totalPrice(list) {
@@ -107,7 +104,7 @@ export default function MyAccount() {
 
 
 
-    const showListOrder = choseShowListOrder(statusOrder).map((item) =>
+    const showListOrder  = choseShowListOrder(statusOrder).map((item) =>
         <div key={item.id} className=" box-order row">
             <div className="order-header col-md-12">
                 <h5>Trạng thái | <span>{item.status}</span></h5>
@@ -201,7 +198,7 @@ export default function MyAccount() {
 
                                             <Nav variant="pills" defaultActiveKey="event-1">
                                                 <Nav.Item>
-                                                    <Nav.Link eventKey="event-1" onClick={() => setStatusOrder("alls")}>Tất cả</Nav.Link>
+                                                    <Nav.Link eventKey="event-1" onClick={() => setStatusOrder("all")}>Tất cả</Nav.Link>
                                                 </Nav.Item>
                                                 <Nav.Item>
                                                     <Nav.Link eventKey="event-2" onClick={() => setStatusOrder("Chờ xác nhận")}>Chờ xác nhận</Nav.Link>
@@ -220,8 +217,6 @@ export default function MyAccount() {
                                                 </Nav.Item>
                                             </Nav>
                                         </div>
-
-
                                         <div>
                                             {showListOrder}
                                         </div>

@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import AddressService from "../service/AddressService"
-import { removeItem, removeAll } from "../app/ListCartItem"
+import { removeItem, removeAll } from "../app/ListCartItem";
 import OrderService from "../service/OrderService"
 import Header from "../component/Header"
 import Footer from "../component/Footer"
 import Modal from 'react-bootstrap/Modal';
 import { RadioButton } from 'primereact/radiobutton';
+import { useNavigate } from "react-router-dom";
 import { Toast } from 'primereact/toast';
 import "../css/checkout.css"
 
@@ -17,14 +18,20 @@ export default function Checkout() {
     const user = JSON.parse(localStorage.getItem("user"))
     const addressService = new AddressService()
     const orderService = new OrderService()
-    const dispath = useDispatch()
+    const dispath = useDispatch();
+    const navigate = useNavigate();
 
     const [listAddress, setListAddress] = useState([])
     const [selectAddress, setSelectAddress] = useState(0)
     const [showChangeAddress, setShowChangeAddress] = useState(false);
-
+    const isLogin = useSelector(state => state.isLogin.value);
 
     useEffect(() => {
+
+        if (isLogin !== true) {
+            navigate("/login", { replace: true });
+        }
+
         addressService.getAddressByUserId(user.id).then((data) => {
             setListAddress(data)
         })
@@ -231,20 +238,17 @@ export default function Checkout() {
                                         aria-labelledby="model-confirm"
                                         centered
                                     >
-                                        <Modal.Header closeButton>
-                                            <Modal.Title id="model-confirm">
-                                                Xác nhận đặt hàng
-                                            </Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-
-                                            Bạn chắc chứ ?
+                        
+                                        <Modal.Body >
+                                            <div className="header-comfirm">
+                                                Xác nhận đặt hàng?
+                                            </div>
 
                                         </Modal.Body>
                                         <Modal.Footer>
-                                            <div>
-                                                <button onClick={()=>createOrder()}>Xác nhận</button>
-                                                <button onClick={()=>setShowConfirm(false)}>Không</button>
+                                            <div className="footer-comfirm">
+                                                <button className="btn-y" onClick={() => createOrder()}>Xác nhận</button>
+                                                <button className="btn-n" onClick={() => setShowConfirm(false)}>Không</button>
                                             </div>
                                         </Modal.Footer>
                                     </Modal>

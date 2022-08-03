@@ -16,10 +16,15 @@ export default function Cart() {
     const navigate = useNavigate()
 
     const data = useSelector(state => state.listCartItem.list)
+    const isLogin = useSelector(state =>state.isLogin.value);
 
     const [cartItem, setCartItem] = useState([])
-
     useEffect(() => {
+
+        if(isLogin !== true){
+            navigate("/login", { replace: true });
+        }
+
         cartService.getCartByIdUser(uID).then((data) => {
             setCartItem(data)
             dispath(removeAll())
@@ -45,8 +50,6 @@ export default function Cart() {
     }
 
     function minusValue(item) {
-       
-
         if (item.qty === 1) {
             return toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: "Số lượng đã tối thiểu", life: 1000 });
         }
@@ -65,16 +68,10 @@ export default function Cart() {
                 toast.current.show({ severity: 'error', summary: 'Thất bại!', detail: data.acessToken, life: 1000 });
             }
         })
-
-        
-       
-
-
     }
 
     //tăng so lượng
     function plusValue(item) {
-        
         let cartItem = {
             id: item.id,
             book_id: item.book.id,
@@ -110,7 +107,6 @@ export default function Cart() {
 
     function totalPrice(){
         let total = 0;
-
         if(data.length <=0){
             return 0;
         }
@@ -120,11 +116,7 @@ export default function Cart() {
         return total +30000;
     }
 
-
-
-
     const showCartItem = cartItem.map((item, index) =>
-
         <tr key={index}>
             <td><input type="checkbox" onChange={(e) => cartItemSelect(e.target.checked, item)} /></td>
             <td>
@@ -144,8 +136,6 @@ export default function Cart() {
             <td>{item.book.price * item.qty}</td>
             <td><button onClick={() => removeItemOfCart(item.id)}><i className="pi pi-trash"></i></button></td>
         </tr>
-
-
     )
 
     return (

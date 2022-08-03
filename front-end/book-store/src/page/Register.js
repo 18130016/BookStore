@@ -73,7 +73,7 @@ export default function Register() {
 
     const handleOnChangeFullName = (e) => {
         setFullName(e.target.value);
-        setRegisterForm({ ...registerForm, full_name: fullName })
+        setRegisterForm({ ...registerForm, full_name: e.target.value })
     }
 
     const handleOnChangeUsername = (e) =>{

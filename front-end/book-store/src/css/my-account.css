@@ -60,7 +60,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-   
 }
 
 .address-detail-header span{
@@ -73,10 +72,11 @@
 }
 
 .address-btn{
-    background-color: white;
+    background-color: transparent;
     border: 0px;
     outline: none;
     color: #00aec9;
+    margin: 5px 10px;
 }
 
 .add-address-md{

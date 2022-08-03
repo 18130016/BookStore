@@ -58,6 +58,6 @@ public class FavoriteController {
 	@DeleteMapping("/{id}")
 	public AuthResponse deleteById(@PathVariable("id")int id) {
 		favRepository.deleteById(id);
-		 return new AuthResponse(true, "Đã xóa thành công");
+		return new AuthResponse(true, "Đã xóa thành công");
 	}
 }

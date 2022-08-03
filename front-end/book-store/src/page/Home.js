@@ -12,7 +12,7 @@ import "swiper/css/pagination";
 import { FreeMode, Pagination, Autoplay } from "swiper";
 import { Paginator } from 'primereact/paginator';
 import Header from '../component/Header';
-
+import Footer from '../component/Footer';
 
 const pagination = {
     clickable: true,
@@ -46,6 +46,7 @@ export default function Home() {
         size: 8,
         name: ""
     }
+
 
     const [first, setFirst] = useState(0);
     const onBasicPageChange = (event) => {
@@ -152,7 +153,7 @@ export default function Home() {
                         >
                             {listBookSwiper.map((book) => {
                                 return (
-                                    <SwiperSlide className="mb-10">
+                                    <SwiperSlide  className="mb-10">
                                         <BookCard book={book} />
                                     </SwiperSlide>
                                 )
@@ -178,6 +179,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }
