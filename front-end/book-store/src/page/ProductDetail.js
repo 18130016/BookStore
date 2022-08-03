@@ -61,8 +61,6 @@ export default function ProductDetail() {
         })
     }
 
-    console.log(listComment)
-
     function addCartItem(product_id) {
         const initcartItem = {
             book_id: product_id,

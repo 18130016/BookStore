@@ -47,14 +47,16 @@ const SalesAnalysis = () => {
   const [typeOfChart, setTypeOfChart] = useState(listCategoryFilter[0]);
   const orderService = new OrderService();
 
+  const [orders, setOrders] = useState([]);
+
   useEffect(() => {
     orderService.getAll().then((res) => {
-      console.log(res[0].list_product);
+      console.log(res);
+      setOrders(res);
     }).catch((err) => {
       console.log(err);
     });
   }, []);
-
 
 
   return (
