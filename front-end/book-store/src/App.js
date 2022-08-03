@@ -25,6 +25,7 @@ import Dashboard from './admin/pages/Dashboard';
 import Blank from './admin/pages/Blank';
 import AddressList from './page/address/address-list/AddressList';
 import Blog from './page/blog/Blog';
+import Orders from './admin/components/orders/Order';
 import Admin from './page/Admin';
 import ProductsAdmin from './admin/components/products/ProductsAdmin';
 import { AuthContextProvider } from './Context/AuthContext';
@@ -55,7 +56,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/shop" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="/shop/orders" element={<Blank />} />
+            <Route path="/shop/orders" element={<Orders />} />
             <Route path="/shop/products" element={<ProductsAdmin />} />
             <Route path="/shop/customers" element={<Blank />} />
             <Route path="/shop/sales-analysis" element={<SalesAnalysis />} />
